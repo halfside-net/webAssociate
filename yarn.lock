@@ -4091,8 +4091,12 @@ imagemin-gifsicle@7.0.0:
     gifsicle "^5.0.0"
     is-gif "^3.0.0"
 
-imagemin-jpegautorotate@./modules/imagemin-jpegautorotate:
-  version "0.0.0"
+imagemin-jpeg-exif-rotate@0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/imagemin-jpeg-exif-rotate/-/imagemin-jpeg-exif-rotate-0.0.1.tgz#6e8f3696c056928fdff7d67929b7d600e3fe2e50"
+  integrity sha512-5XpUm4xNfM3g7swUs9oKkqk3tGQuYzQTWzcmHyZ5nc/+zEis8zOF9PjYh8joc50fx/JfPlNnfm3M580DwQo31w==
+  dependencies:
+    jpeg-autorotate "^8.0.1"
 
 imagemin-jpegoptim@8.0.0:
   version "8.0.0"
@@ -4408,7 +4412,7 @@ jest-worker@^27.0.2, jest-worker@^27.4.5:
     merge-stream "^2.0.0"
     supports-color "^8.0.0"
 
-jpeg-autorotate@8.0.1:
+jpeg-autorotate@^8.0.1:
   version "8.0.1"
   resolved "https://registry.yarnpkg.com/jpeg-autorotate/-/jpeg-autorotate-8.0.1.tgz#4e33564593f94cd1223f4137f3a5ccfecdcd065b"
   integrity sha512-LAylGB3K3YIQymeqzzE+I1cM0O2R4m9I+EXniklFRpNeQ6H343VQLX90H597JOWYc1JlmNlJb8loTZ+SIsc4QQ==

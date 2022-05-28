@@ -108,7 +108,7 @@ export default env => ({
           options: {
             plugins: [
               ['imagemin-gifsicle', { optimizationLevel: 3 }],
-              'imagemin-jpegautorotate',
+              'imagemin-jpeg-exif-rotate',
               ['imagemin-jpegoptim', { progressive: true }],
               ['imagemin-svgo', {
                 plugins: [

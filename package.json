@@ -21,11 +21,10 @@
     "image-minimizer-webpack-plugin": "3.2.3",
     "imagemin": "8.0.1",
     "imagemin-gifsicle": "7.0.0",
-    "imagemin-jpegautorotate": "./modules/imagemin-jpegautorotate",
+    "imagemin-jpeg-exif-rotate": "0.0.1",
     "imagemin-jpegoptim": "8.0.0",
     "imagemin-svgo": "10.0.1",
     "imagemin-zopfli": "7.0.0",
-    "jpeg-autorotate": "8.0.1",
     "node-sass": "7.0.1",
     "postcss": "8.4.12",
     "postcss-line-height-px-to-unitless": "0.2.1",
@@ -41,9 +40,6 @@
     "node": ">=16.14.2"
   },
   "license": "UNLICENSED",
-  "resolutions": {
-    "imagemin-jpegautorotate": "./modules/imagemin-jpegautorotate"
-  },
   "scripts": {
     "build": "yarn && yarn clean && webpack --env production",
     "clean": "rm -rf dist",
