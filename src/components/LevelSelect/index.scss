@@ -1,0 +1,21 @@
+@import '~/sass/common.scss';
+
+/** @define LevelSelect */
+
+.LevelSelect {
+  height: 100%;
+  width: 100%;
+  padding:
+    $LevelSelect-padding-top
+    $LevelSelect-padding-right
+    $LevelSelect-padding-bottom
+    $LevelSelect-padding-left;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+
+  &-card {
+    &:not(:first-child) {
+      margin-top: $LevelSelect-card-spacing;
+    }
+  }
+}

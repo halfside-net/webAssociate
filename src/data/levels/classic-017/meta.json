@@ -1,0 +1,6 @@
+{
+  "description": "Start from one of the 8 starting points, spread around the edges of the level, to finish this game of Tic Tac Toe.",
+  "height": 1000,
+  "name": "Tic Tac Toe",
+  "width": 1200
+}

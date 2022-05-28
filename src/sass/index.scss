@@ -1,0 +1,18 @@
+@import 'base.scss';
+@import 'common.scss';
+
+html {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: $page-background;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;
+}

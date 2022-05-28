@@ -1,0 +1,34 @@
+@import '~/sass/common.scss';
+
+/** @define App */
+
+.App {
+  height: 100%;
+  width: 100%;
+  font-family: $App-font-family;
+
+  &-header
+  {
+    @include z-index('appHeader');
+
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: $App-header-height;
+    width: 100%;
+    background: $App-header-background;
+    padding: $App-header-padding;
+    align-items: center;
+    color: $App-header-color;
+  }
+
+  &-content
+  {
+    @include z-index('appContent');
+
+    position: relative;
+    height: 100%;
+    width: 100%;
+  }
+}

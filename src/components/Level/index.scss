@@ -1,0 +1,17 @@
+@import '~/sass/common.scss';
+
+/** @define Level */
+
+.Level {
+  height: 100%;
+  width: 100%;
+  padding-top: $Level-padding-top;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  font-family: $Level-font-family;
+
+  &-container
+  {
+    position: relative;
+  }
+}
