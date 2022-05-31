@@ -80,8 +80,10 @@ $Level-padding-top: $header-height;
 $LevelCard-border-radius: $border-radius-default;
 $LevelCard-info-background: $gray-light;
 $LevelCard-padding: 16px;
+$LevelCard-progress-bar-background-color: $white;
 $LevelCard-progress-bar-background-progress: linear-gradient($green-light, $teal);
 $LevelCard-progress-bar-background-progress-complete: $gold;
+$LevelCard-progress-bar-border-width: 2px;
 $LevelCard-progress-bar-margin: 2px;
 $LevelCard-progress-bar-width: 16px;
 $LevelCard-title-background: $white;
@@ -94,7 +96,6 @@ $LevelCard-toggle-border: 2px solid currentColor;
 $LevelCard-toggle-color: $white;
 $LevelCard-toggle-size: 20px;
 
-$LevelCard-progress-bar-background: $LevelCard-title-background;
 $LevelCard-toggle-background-expanded:
   center / ($LevelCard-toggle-size 2px)
   no-repeat

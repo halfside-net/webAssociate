@@ -70,7 +70,10 @@ export default hot(module)(class App extends React.Component {
         );
       case 'levelselect':
         return (
-          <LevelSelect onSelectLevel={level => this.viewLevel(level)} />
+          <LevelSelect
+            levelData={this.savedData.levels}
+            onSelectLevel={level => this.viewLevel(level)}
+          />
         );
       default:
         return (

@@ -111,7 +111,7 @@ export default hot(module)(class Level extends React.Component {
   save() {
     this.props.onSave(Object.fromEntries(
       Object.entries(this.state)
-        .filter(([id, solution]) => solution)
+        .filter(([id, solution]) => solution && !this.props.level.words[id].isStartup)
     ));
   }
 

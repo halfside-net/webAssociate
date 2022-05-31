@@ -12,10 +12,14 @@ export default hot(module)(class LevelSelect extends React.Component {
   }
 
   render() {
+    const lettersSolved = Object.values(this.props.levelData || {})
+      .reduce((total, solution) => total + solution.length, 0);
+    const progress = this.props.size ? Math.min(lettersSolved / this.props.size, 1) : 0;
+
     return (
       <div
         className={'LevelCard'
-          + (this.props.progress >= 1 ? ' is-complete' : '')
+          + (progress < 1 ? '' : ' is-complete')
           + (this.state.expanded ? ' is-expanded' : '')
         }
       >
@@ -27,7 +31,7 @@ export default hot(module)(class LevelSelect extends React.Component {
             <span
               className="LevelCard-progressIndicator"
               style={{
-                height: `${Math.max(0, 1 - this.props.progress) * 100}%`
+                backgroundSize: `100% ${(1 - progress) * 100}%`
               }}
             />
           </span>
@@ -40,9 +44,16 @@ export default hot(module)(class LevelSelect extends React.Component {
           onClick={() => this.toggleDetails()}
         />
         <div className="LevelCard-info">
-          <div className="LevelCard-size">
-            Level Size: {this.props.size}
-          </div>
+          {this.props.size ? (
+            <div className="LevelCard-size">
+              Level Size: {
+                this.props.size < 900 ? 'Small'
+                : this.props.size < 1200 ? 'Medium'
+                : this.props.size < 1500 ? 'Large'
+                : 'Giant'
+              }
+            </div>
+          ) : ''}
           {this.props.description ? (
             <div className="LevelCard-description">
               {this.props.description}

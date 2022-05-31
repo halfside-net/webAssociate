@@ -29,10 +29,10 @@ export default hot(module)(class LevelSelect extends React.Component {
             >
               <LevelCard
                 description={level.description}
+                levelData={this.props.levelData[level.id]}
                 name={level.name}
                 onSelect={() => this.selectLevel(level)}
-                progress={level.progress || 0}
-                size={'TODO'}
+                size={level.size}
               />
             </div>
           ))}

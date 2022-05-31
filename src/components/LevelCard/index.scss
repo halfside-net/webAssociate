@@ -45,14 +45,26 @@
     background: $LevelCard-progress-bar-background-progress-complete;
   }
 
-  &.is-expanded &-progressBar {
+  &.is-expanded &-progressBar,
+  &.is-expanded &-progressIndicator {
     border-bottom-left-radius: 0;
   }
 
   &-progressIndicator {
     display: block;
+    margin: -1 * $LevelCard-progress-bar-margin;
+    box-sizing: content-box;
+    height: calc(100% - #{2 * $LevelCard-progress-bar-border-width});
     width: $LevelCard-progress-bar-width;
-    background: $LevelCard-progress-bar-background;
+    border-radius: $LevelCard-border-radius 0 0 $LevelCard-border-radius;
+    border:
+      $LevelCard-progress-bar-margin + $LevelCard-progress-bar-border-width
+      solid
+      transparent;
+    background: linear-gradient($LevelCard-progress-bar-background-color, $LevelCard-progress-bar-background-color)
+      top
+      no-repeat
+      content-box;
   }
 
   &-toggleBtn {
