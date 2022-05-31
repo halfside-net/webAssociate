@@ -4,18 +4,43 @@ import { hot } from 'react-hot-loader';
 import Home from '~/components/Home';
 import Level from '~/components/Level';
 import LevelSelect from '~/components/LevelSelect';
+import { WindowResizeAdjuster } from '~/js/WindowResizeAdjuster.js';
 
 export default hot(module)(class App extends React.Component {
   constructor(props) {
     super(props);
 
+    this.hasFocus = false;
     this.id = 'webassociate';
     this.state = {
       level: null,
       view: 'home'
     };
+    this.windowResizeAdjuster = new WindowResizeAdjuster();
+
+    this.engageWindowResizeAdjuster = () => {
+      if (!this.windowResizeAdjuster.running) {
+        this.windowResizeAdjuster.engage(100);
+      }
+    };
 
     this.loadSavedData();
+  }
+
+  handleBlur(e) {
+    this.hasFocus = false;
+    window.requestAnimationFrame(() => {
+      if (!this.hasFocus) {
+        window.removeEventListener('resize', this.engageWindowResizeAdjuster);
+        this.windowResizeAdjuster.reset();
+      }
+    });
+  }
+
+  handleFocus(e) {
+    this.hasFocus = true;
+    this.engageWindowResizeAdjuster();
+    window.addEventListener('resize', this.engageWindowResizeAdjuster);
   }
 
   loadSavedData() {
@@ -28,7 +53,11 @@ export default hot(module)(class App extends React.Component {
 
   render() {
     return (
-      <div className="App">
+      <div
+        className="App"
+        onBlur={e => this.handleBlur(e)}
+        onFocus={e => this.handleFocus(e)}
+      >
         <header className="App-header">
           {this.renderBackButton()}
         </header>
