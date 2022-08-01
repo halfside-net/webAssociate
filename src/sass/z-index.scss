@@ -6,7 +6,12 @@
 // You can create a new stacking context while keeping the element's z-index 0 by making it a
 // single-item list, like ['identifier'].
 $z-stacks: [
-  'appHeader',
+  'appSettingsButton',
+  'appSettings',
+  'appHomeButton',
+  'appHome',
+  'appLevelselectButton',
+  'appLevelselect',
   [
     'wordHelpText',
     'focusedWord',
@@ -17,7 +22,7 @@ $z-stacks: [
     'word',
     '...',
   ],
-  ['appContent'],
+  ['appLevel'],
   '...',
 ];
 

@@ -14,7 +14,7 @@ export default hot(module)(class Home extends React.Component {
         />
         <button
           className="Home-button Home-button--play"
-          onClick={this.props.onViewLevelSelect}
+          onClick={this.props.onPlay}
         >
           Play
         </button>

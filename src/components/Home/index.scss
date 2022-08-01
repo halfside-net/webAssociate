@@ -5,6 +5,7 @@
 .Home {
   display: flex;
   height: 100%;
+  background: $Home-background;
   padding:
     $Home-padding-top
     $Home-padding-side

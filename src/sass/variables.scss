@@ -41,10 +41,7 @@ $word-font-size: 16px;
 // App
 
 $App-font-family: $font-family-main;
-$App-header-background: linear-gradient($blue, transparentize($blue, 0.1) 90%, transparent);
-$App-header-color: $white;
 $App-header-height: $header-height;
-$App-header-padding: 0 32px;
 
 // Association
 
@@ -58,6 +55,7 @@ $Association-background-unsolved:
 
 // Home
 
+$Home-background: $page-background;
 $Home-button-background: $word-background;
 $Home-button-border-color: $word-border-color;
 $Home-button-border-radius: $word-border-radius;
@@ -104,6 +102,7 @@ $LevelCard-toggle-background-expanded:
 
 // LevelSelect
 
+$LevelSelect-background: $page-background;
 $LevelSelect-card-spacing: $container-padding;
 $LevelSelect-padding-bottom: $container-padding * 1.5;
 $LevelSelect-padding-left: $container-padding;

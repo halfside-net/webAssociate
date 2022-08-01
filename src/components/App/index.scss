@@ -3,29 +3,77 @@
 /** @define App */
 
 .App {
+  position: relative;
   height: 100%;
   width: 100%;
   font-family: $App-font-family;
 
-  &-header
-  {
-    @include z-index('appHeader');
-
-    display: flex;
-    position: fixed;
+  &-levelselectButton,
+  &-settingsButton {
+    position: absolute;
     top: 0;
-    left: 0;
     height: $App-header-height;
-    width: 100%;
-    background: $App-header-background;
-    padding: $App-header-padding;
-    align-items: center;
-    color: $App-header-color;
+    width: $App-header-height;
   }
 
-  &-content
-  {
-    @include z-index('appContent');
+  &-levelselectButton {
+    @include z-index('appLevelselectButton');
+
+    left: 0;
+  }
+
+  &-homeButton {
+    @include z-index('appHomeButton');
+
+    position: absolute;
+    top: 0;
+    left: calc(50% - #{$App-header-height / 2});
+    height: $App-header-height;
+    width: $App-header-height;
+  }
+
+  &-settingsButton {
+    @include z-index('appSettingsButton');
+
+    right: 0;
+  }
+
+  &-home,
+  &-levelselect,
+  &-settings {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+  }
+
+  &-home {
+    @include z-index('appHome');
+  }
+
+  &:not(.is-showing-home) &-home {
+    transform: translateY(-100%);
+  }
+
+  &-levelselect {
+    @include z-index('appLevelselect');
+  }
+
+  &:not(.is-showing-levelselect) &-levelselect {
+    transform: translateX(-100%);
+  }
+
+  &-settings {
+    @include z-index('appSettings');
+  }
+
+  &:not(.is-showing-settings) &-settings {
+    transform: translateX(100%);
+  }
+
+  &-level {
+    @include z-index('appLevel');
 
     position: relative;
     height: 100%;

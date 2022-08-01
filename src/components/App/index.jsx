@@ -1,6 +1,9 @@
 import './index.scss';
 import React from 'react';
 import { hot } from 'react-hot-loader';
+import { ReactComponent as LevelSelectSVG } from '~/assets/images/levelselect.svg';
+import logo from '~/assets/images/logo.png';
+import { ReactComponent as SettingsSVG } from '~/assets/images/settings.svg';
 import Home from '~/components/Home';
 import Level from '~/components/Level';
 import LevelSelect from '~/components/LevelSelect';
@@ -14,7 +17,9 @@ export default hot(module)(class App extends React.Component {
     this.id = 'webassociate';
     this.state = {
       level: null,
-      view: 'home'
+      viewHome: true,
+      viewLevelselect: true,
+      viewSettings: false
     };
     this.windowResizeAdjuster = new WindowResizeAdjuster();
 
@@ -54,61 +59,61 @@ export default hot(module)(class App extends React.Component {
   render() {
     return (
       <div
-        className="App"
+        className={'App'
+          + (this.state.viewHome ? ' is-showing-home' : '')
+          + (this.state.viewLevelselect ? ' is-showing-levelselect' : '')
+          + (this.state.viewSettings ? ' is-showing-settings' : '')
+        }
         onBlur={e => this.handleBlur(e)}
         onFocus={e => this.handleFocus(e)}
       >
         <header className="App-header">
-          {this.renderBackButton()}
+          <button
+            className="App-levelselectButton"
+            onClick={() => this.setState(state => ({ viewLevelselect: !state.viewLevelselect }))}
+          >
+            <LevelSelectSVG />
+          </button>
+          <button
+            className="App-homeButton"
+            onClick={() => this.setState({ viewHome: true })}
+          >
+            <img
+              alt="webAssociate"
+              className="App-homeButtonIcon"
+              src={logo}
+            />
+          </button>
+          <button
+            className="App-settingsButton"
+            onClick={() => this.setState(state => ({ viewSettings: !state.viewSettings }))}
+          >
+            <SettingsSVG />
+          </button>
         </header>
-        <div className="App-content">
-          {this.renderCurrentView()}
+
+        <div className="App-home">
+          <Home onPlay={() => this.setState({ viewHome: false })} />
         </div>
-      </div>
-    );
-  }
-
-  renderBackButton() {
-    switch (this.state.view) {
-      case 'level':
-        return (
-          <button className="App-backButton" onClick={() => this.viewLevelSelect()}>
-            &lt; Back to level selection
-          </button>
-        );
-      case 'levelselect':
-        return (
-          <button className="App-backButton" onClick={() => this.viewHome()}>
-            &lt; Back home
-          </button>
-        );
-      default:
-        return;
-    }
-  }
-
-  renderCurrentView() {
-    switch (this.state.view) {
-      case 'level':
-        return (
+        <div className="App-levelselect">
+          <LevelSelect
+            levelData={this.savedData.levels}
+            onSelectLevel={level => this.setState({ level, viewLevelselect: false })}
+          />
+        </div>
+        <div className="App-settings">
+          // TODO
+          Settings
+        </div>
+        <div className="App-level">
           <Level
             level={this.state.level}
             onSave={data => this.saveLevel(this.state.level.id, data)}
-            savedData={this.savedData.levels[this.state.level.id]}
+            savedData={this.state.level && this.savedData.levels[this.state.level.id]}
           />
-        );
-      case 'levelselect':
-        return (
-          <LevelSelect
-            levelData={this.savedData.levels}
-            onSelectLevel={level => this.viewLevel(level)}
-          />
-        );
-      default:
-        return (
-          <Home onViewLevelSelect={() => this.viewLevelSelect()} />
-        );
-    }
+        </div>
+      </div>
+    );
   }
 
   save() {
@@ -118,24 +123,5 @@ export default hot(module)(class App extends React.Component {
   saveLevel(levelId, data) {
     this.savedData.levels[levelId] = data;
     this.save();
-  }
-
-  viewHome() {
-    this.setState({
-      view: 'home'
-    });
-  }
-
-  viewLevel(level = this.state.level) {
-    this.setState({
-      level,
-      view: 'level'
-    });
-  }
-
-  viewLevelSelect() {
-    this.setState({
-      view: 'levelselect'
-    });
   }
 });

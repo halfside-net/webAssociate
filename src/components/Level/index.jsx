@@ -7,20 +7,22 @@ import { normalizeText } from '~/js/helpers.js';
 
 export default hot(module)(class Level extends React.Component {
   constructor(props) {
+    console.log('new Level');
     super(props);
 
-    this.state = Object.fromEntries(
-      Object.entries(props.level.words)
-        .map(([wordId, wordData]) => [
-          wordId,
-          wordData.isStartup ? wordData.word
-            : this.getCorrectSubstring(wordId, (this.props.savedData || {})[wordId] || '')
-        ])
-    );
+    this.state = {};
+
+    this.load();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.level != this.props.level) {
+      this.load();
+    }
   }
 
   getCorrectSubstring(wordId, guess) {
-    const wordData = this.props.level.words[wordId];
+    const wordData = this.getWords()[wordId];
     const normalizedGuess = normalizeText(guess);
     let lettersSolved = 0;
 
@@ -46,8 +48,12 @@ export default hot(module)(class Level extends React.Component {
     return this.state[wordId] || '';
   }
 
+  getWords() {
+    return (this.props.level || {}).words || {};
+  }
+
   guessWord(wordId, guess) {
-    const wordData = this.props.level.words[wordId];
+    const wordData = this.getWords()[wordId];
 
     if (this.wordIsSolved(wordId)) {
       (wordData.associations || [])
@@ -62,8 +68,20 @@ export default hot(module)(class Level extends React.Component {
     }
   }
 
+  load() {
+    this.setState(Object.fromEntries([
+      ...Object.keys(this.state).map(wordId => [wordId, undefined]),
+      ...Object.entries((this.props.level || {}).words || {})
+        .map(([wordId, wordData]) => [
+          wordId,
+          wordData.isStartup ? wordData.word
+            : this.getCorrectSubstring(wordId, (this.props.savedData || {})[wordId] || '')
+        ])
+    ]));
+  }
+
   render() {
-    const wordEntries = Object.entries(this.props.level.words)
+    const wordEntries = Object.entries(this.getWords())
       .sort(([idA, dataA], [idB, dataB]) => dataA.y - dataB.y || dataA.x - dataB.x);
 
     return (
@@ -71,8 +89,8 @@ export default hot(module)(class Level extends React.Component {
         <div
           className="Level-container"
           style={{
-            height: `${this.props.level.height}px`,
-            width: `${this.props.level.width}px`
+            height: `${(this.props.level || {}).height || 0}px`,
+            width: `${(this.props.level || {}).width || 0}px`
           }}
         >
           {wordEntries.map(([wordId, wordData]) =>
@@ -84,9 +102,9 @@ export default hot(module)(class Level extends React.Component {
                   word1Solved={this.wordIsSolved(wordId)}
                   word2Solved={this.wordIsSolved(otherWordId)}
                   x1={wordData.x}
-                  x2={this.props.level.words[otherWordId].x}
+                  x2={this.getWords()[otherWordId].x}
                   y1={wordData.y}
-                  y2={this.props.level.words[otherWordId].y}
+                  y2={this.getWords()[otherWordId].y}
                 />
               ))
           )}
@@ -95,7 +113,7 @@ export default hot(module)(class Level extends React.Component {
               hasSolvedAssociation={(wordData.associations || []).some(otherWordId => this.wordIsSolved(otherWordId))}
               helpText={wordData.helpText}
               isBonus={wordData.isBonus}
-              key={wordId}
+              key={JSON.stringify([this.props.level.id, wordId])}
               lettersSolved={this.getWordCurrentSolution(wordId).length}
               onGuess={guess => this.guessWord(wordId, guess)}
               word={wordData.word}
@@ -111,11 +129,11 @@ export default hot(module)(class Level extends React.Component {
   save() {
     this.props.onSave(Object.fromEntries(
       Object.entries(this.state)
-        .filter(([id, solution]) => solution && !this.props.level.words[id].isStartup)
+        .filter(([id, solution]) => solution && !this.getWords()[id].isStartup)
     ));
   }
 
   wordIsSolved(wordId) {
-    return this.getWordCurrentSolution(wordId).length >= this.props.level.words[wordId].word.length;
+    return this.getWordCurrentSolution(wordId).length >= this.getWords()[wordId].word.length;
   }
 });
