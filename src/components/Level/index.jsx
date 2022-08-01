@@ -7,18 +7,16 @@ import { normalizeText } from '~/js/helpers.js';
 
 export default hot(module)(class Level extends React.Component {
   constructor(props) {
-    console.log('new Level');
     super(props);
 
-    this.state = {};
-
-    this.load();
-  }
-
-  componentDidUpdate(prevProps) {
-    if (prevProps.level != this.props.level) {
-      this.load();
-    }
+    this.state = Object.fromEntries(
+      Object.entries((props.level || {}).words || {})
+        .map(([wordId, wordData]) => [
+          wordId,
+          wordData.isStartup ? wordData.word
+            : this.getCorrectSubstring(wordId, (this.props.savedData || {})[wordId] || '')
+        ])
+    );
   }
 
   getCorrectSubstring(wordId, guess) {
@@ -68,18 +66,6 @@ export default hot(module)(class Level extends React.Component {
     }
   }
 
-  load() {
-    this.setState(Object.fromEntries([
-      ...Object.keys(this.state).map(wordId => [wordId, undefined]),
-      ...Object.entries((this.props.level || {}).words || {})
-        .map(([wordId, wordData]) => [
-          wordId,
-          wordData.isStartup ? wordData.word
-            : this.getCorrectSubstring(wordId, (this.props.savedData || {})[wordId] || '')
-        ])
-    ]));
-  }
-
   render() {
     const wordEntries = Object.entries(this.getWords())
       .sort(([idA, dataA], [idB, dataB]) => dataA.y - dataB.y || dataA.x - dataB.x);
@@ -113,7 +99,7 @@ export default hot(module)(class Level extends React.Component {
               hasSolvedAssociation={(wordData.associations || []).some(otherWordId => this.wordIsSolved(otherWordId))}
               helpText={wordData.helpText}
               isBonus={wordData.isBonus}
-              key={JSON.stringify([this.props.level.id, wordId])}
+              key={wordId}
               lettersSolved={this.getWordCurrentSolution(wordId).length}
               onGuess={guess => this.guessWord(wordId, guess)}
               word={wordData.word}

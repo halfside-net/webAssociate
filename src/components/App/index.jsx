@@ -107,6 +107,7 @@ export default hot(module)(class App extends React.Component {
         </div>
         <div className="App-level">
           <Level
+            key={(this.state.level || {}).id || ''}
             level={this.state.level}
             onSave={data => this.saveLevel(this.state.level.id, data)}
             savedData={this.state.level && this.savedData.levels[this.state.level.id]}
