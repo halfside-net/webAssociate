@@ -1,9 +1,11 @@
-import React from 'react'
-import ReactDOMServer from 'react-dom/server'
-import { PageShell } from './PageShell'
-import { escapeInject, dangerouslySkipEscape } from 'vite-plugin-ssr/server'
-import { PageContextProvider } from './usePageContext'
-import type { PageContextServer } from './types'
+import React from 'react';
+import ReactDOMServer from 'react-dom/server';
+import { PageShell } from './PageShell';
+import { escapeInject, dangerouslySkipEscape } from 'vite-plugin-ssr/server';
+import { PageContextProvider } from './usePageContext';
+import type { PageContextServer } from './types';
+
+export const passToClient = ['pageProps', 'urlPathname']
 
 export async function render(pageContext: PageContextServer) {
   const { exports, Page, pageProps, urlPathname } = pageContext;
