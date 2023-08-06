@@ -44,6 +44,7 @@ export default function LevelCard(props: {
         </span>
       </button>
       <button
+        aria-label="Toggle details"
         className="LevelCard-toggleBtn"
         onClick={toggleDetails}
       />

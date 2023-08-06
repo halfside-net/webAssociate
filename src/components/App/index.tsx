@@ -7,7 +7,7 @@ import Home from '~/components/Home';
 import Level from '~/components/Level';
 import { LevelData, LevelSolutionData } from '~/components/Level/types';
 import LevelSelect from '~/components/LevelSelect';
-import { WindowResizeAdjuster } from '~/ts/WindowResizeAdjuster.ts';
+import { WindowResizeAdjuster } from '~/ts/WindowResizeAdjuster';
 import { SavedData } from './types';
 
 const appId = 'webassociate';
@@ -78,12 +78,14 @@ export default function App() {
     >
       <header className="App-header">
         <button
+          aria-label="Select level"
           className="App-levelselectButton"
           onClick={() => setViewLevelselect(!viewLevelselect)}
         >
           <LevelSelectSVG />
         </button>
         <button
+          aria-label="Home"
           className="App-homeButton"
           onClick={() => setViewHome(true)}
         >
@@ -94,6 +96,7 @@ export default function App() {
           />
         </button>
         <button
+          aria-label="Settings"
           className="App-settingsButton"
           onClick={() => setViewSettings(!viewSettings)}
         >
