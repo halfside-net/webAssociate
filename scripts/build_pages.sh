@@ -1,6 +1,6 @@
 #!/bin/bash
 
-OUTPUT_PATH='dist/'
+OUTPUT_PATH='dist/client/'
 
 set -e
 
@@ -8,10 +8,22 @@ cd "$(dirname "${BASH_SOURCE[0]}")"
 cd "$(git rev-parse --show-toplevel)"
 
 # Build site
-yarn build
+npm i
+npm run build
+
+# Fix webmanifest.json
+grep -v '<head></head>' "${OUTPUT_PATH}webmanifest.json.html" > "${OUTPUT_PATH}webmanifest.json"
+
+# Remove unwanted files
+rm "${OUTPUT_PATH}manifest.json" \
+  "${OUTPUT_PATH}vite-plugin-ssr.json" \
+  "${OUTPUT_PATH}webmanifest.json.html"
 
 # Move build output to root directory and remove all other files
+tempdir="$(mktemp -d)"
+mv $(ls -A "$OUTPUT_PATH" | sed "s#^#${OUTPUT_PATH}#") "$tempdir"
 git clean -fx -d . -e "/${OUTPUT_PATH}"
-git rm $(git ls-files | grep -v "^${OUTPUT_PATH}")
-mv $OUTPUT_PATH* .
-rm -r "$OUTPUT_PATH"
+git rm $(git ls-files)
+rm -r ./*
+mv $(ls -A "$tempdir" | sed "s#^#${tempdir}/#") .
+rm -r "$tempdir"

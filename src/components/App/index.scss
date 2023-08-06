@@ -27,7 +27,7 @@
 
     position: absolute;
     top: 0;
-    left: calc(50% - #{$App-header-height / 2});
+    left: calc(50% - #{0.5 * $App-header-height});
     height: $App-header-height;
     width: $App-header-height;
   }

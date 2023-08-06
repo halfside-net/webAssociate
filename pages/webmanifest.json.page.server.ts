@@ -1,9 +1,10 @@
-<%
-  const favicon = require('~/assets/images/favicon.png').default;
-  const logo192 = require('~/assets/images/logo192.png').default;
-  const logo512 = require('~/assets/images/logo512.png').default;
-%><%=
-  JSON.stringify({
+import { dangerouslySkipEscape } from 'vite-plugin-ssr/server'
+import favicon from '~/assets/images/favicon.png';
+import logo192 from '~/assets/images/logo192.png';
+import logo512 from '~/assets/images/logo512.png';
+
+export function render() {
+  return dangerouslySkipEscape(JSON.stringify({
     short_name: 'React App',
     name: 'Create React App Sample',
     icons: [
@@ -27,5 +28,5 @@
     display: 'standalone',
     theme_color: '#000',
     background_color: '#fff'
-  })
-%>
+  }));
+}

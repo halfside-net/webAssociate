@@ -1,4 +1,8 @@
 export class WindowResizeAdjuster {
+  offsetTop: number;
+  running: boolean;
+  timeout: number;
+
   constructor() {
     this.offsetTop = 0;
     this.running = false;
