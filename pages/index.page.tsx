@@ -27,7 +27,7 @@ export function PageHead() {
 
       <meta name="theme-color" content="#fff" />
 
-      <link rel="manifest" href="/webmanifest.json" />
+      <link rel="manifest" href={urlBase + '/webmanifest.json'} />
 
       <link rel="canonical" href={url} />
 
