@@ -119,10 +119,17 @@ $LevelCard-toggle-background-expanded:
 
 $LevelSelect-background: $page-background;
 $LevelSelect-card-spacing: $container-padding;
-$LevelSelect-padding-bottom: $container-padding * 1.5;
+$LevelSelect-padding-bottom: 1.5 * $container-padding;
 $LevelSelect-padding-left: $container-padding;
 $LevelSelect-padding-right: $container-padding;
-$LevelSelect-padding-top: $header-height + $container-padding * 1.5;
+$LevelSelect-padding-top: $header-height + 1.5 * $container-padding;
+
+// Settings
+
+$Settings-background: $page-background;
+$Settings-padding-bottom: 1.5 * $container-padding;
+$Settings-padding-side: $container-padding;
+$Settings-padding-top: 1.5 * $container-padding;
 
 // Word
 

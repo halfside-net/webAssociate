@@ -1,12 +1,15 @@
 import './index.scss';
 import { useEffect, useRef, useState } from 'react';
+import { ReactComponent as CloseSVG } from '~/assets/images/close.svg';
 import { ReactComponent as LevelSelectSVG } from '~/assets/images/levelselect.svg';
 import logo from '~/assets/images/logo.png';
+import { ReactComponent as PlaySVG } from '~/assets/images/play.svg';
 import { ReactComponent as SettingsSVG } from '~/assets/images/settings.svg';
 import Home from '~/components/Home';
 import Level from '~/components/Level';
 import { LevelData, LevelSolutionData } from '~/components/Level/types';
 import LevelSelect from '~/components/LevelSelect';
+import Settings from '~/components/Settings';
 import { WindowResizeAdjuster } from '~/ts/WindowResizeAdjuster';
 import { SavedData } from './types';
 
@@ -77,18 +80,27 @@ export default function App() {
       onFocus={handleFocus}
     >
       <header className="App-header">
-        <button
-          aria-label="Select level"
-          className="App-levelselectButton"
-          onClick={() => setViewLevelselect(!viewLevelselect)}
-        >
-          <LevelSelectSVG
-            className="App-levelselectButtonIcon"
-          />
-        </button>
+        {(level || !viewLevelselect) &&
+          <button
+            aria-label={viewLevelselect ? 'Resume level' : 'Select level'}
+            className="App-levelselectButton"
+            onClick={() => setViewLevelselect(!viewLevelselect)}
+          >
+            {viewLevelselect ?
+              <PlaySVG
+                className="App-levelselectButtonIcon"
+              />
+            :
+              <LevelSelectSVG
+                className="App-levelselectButtonIcon"
+              />
+            }
+          </button>
+        }
         <button
           aria-label="Home"
           className="App-homeButton"
+          disabled={viewHome}
           onClick={() => setViewHome(true)}
         >
           <img
@@ -98,20 +110,28 @@ export default function App() {
           />
         </button>
         <button
-          aria-label="Settings"
+          aria-label={viewSettings ? 'Close settings' : 'Settings'}
           className="App-settingsButton"
           onClick={() => setViewSettings(!viewSettings)}
         >
-          <SettingsSVG
-            className="App-settingsButtonIcon"
-          />
+          {viewSettings ?
+            <CloseSVG
+              className="App-settingsButtonIcon"
+            />
+          :
+            <SettingsSVG
+              className="App-settingsButtonIcon"
+            />
+          }
         </button>
       </header>
 
       <div className="App-home">
         <Home onPlay={() => setViewHome(false)} />
       </div>
-      <div className="App-levelselect">
+      <div
+        className="App-levelselect"
+      >
         <LevelSelect
           levelData={savedDataRef.current?.levels}
           onSelectLevel={level => {
@@ -120,11 +140,14 @@ export default function App() {
           }}
         />
       </div>
-      <div className="App-settings">
-        // TODO
-        Settings
+      <div
+        className="App-settings"
+      >
+        <Settings />
       </div>
-      <div className="App-level">
+      <div
+        className="App-level"
+      >
         <Level
           key={level?.id || ''}
           level={level}

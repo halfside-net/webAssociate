@@ -1,0 +1,15 @@
+@import '~/sass/common.scss';
+
+/** @define Settings */
+
+.Settings {
+  display: flex;
+  height: 100%;
+  background: $Settings-background;
+  padding:
+    $Settings-padding-top
+    $Settings-padding-side
+    $Settings-padding-bottom;
+  flex-direction: column;
+  align-items: center;
+}

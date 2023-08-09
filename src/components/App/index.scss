@@ -34,6 +34,19 @@
     padding: 0 $App-button-corner-padding $App-button-corner-padding 0;
   }
 
+  &.is-showing-settings &-levelselectButton,
+  &.is-showing-settings &-home,
+  &.is-showing-settings &-levelselect,
+  &.is-showing-settings &-level {
+    visibility: hidden;
+  }
+
+  &.is-showing-home &-levelselectButton,
+  &.is-showing-home &-levelselect,
+  &.is-showing-home &-level {
+    visibility: hidden;
+  }
+
   &-levelselectButtonIcon,
   &-settingsButtonIcon {
     height: 70%;
@@ -76,6 +89,7 @@
 
   &:not(.is-showing-home) &-home {
     transform: translateY(-100%);
+    visibility: hidden;
   }
 
   &-levelselect {
@@ -84,6 +98,7 @@
 
   &:not(.is-showing-levelselect) &-levelselect {
     transform: translateX(-100%);
+    visibility: hidden;
   }
 
   &-settings {
@@ -92,6 +107,7 @@
 
   &:not(.is-showing-settings) &-settings {
     transform: translateX(100%);
+    visibility: hidden;
   }
 
   &-level {
@@ -100,5 +116,9 @@
     position: relative;
     height: 100%;
     width: 100%;
+  }
+
+  &.is-showing-levelselect &-level {
+    visibility: hidden;
   }
 }

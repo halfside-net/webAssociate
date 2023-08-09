@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import Association from '~/components/Association';
 import { WordData } from '~/components/Word/types';
 import Word from '~/components/Word';
-import { normalizeText } from '~/ts/helpers.ts';
+import { normalizeText } from '~/ts/helpers';
 import { LevelData, LevelSolutionData } from './types';
 
 function getCorrectSubstring(wordData: WordData, guess: string) {
