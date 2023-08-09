@@ -82,7 +82,9 @@ export default function App() {
           className="App-levelselectButton"
           onClick={() => setViewLevelselect(!viewLevelselect)}
         >
-          <LevelSelectSVG />
+          <LevelSelectSVG
+            className="App-levelselectButtonIcon"
+          />
         </button>
         <button
           aria-label="Home"
@@ -100,7 +102,9 @@ export default function App() {
           className="App-settingsButton"
           onClick={() => setViewSettings(!viewSettings)}
         >
-          <SettingsSVG />
+          <SettingsSVG
+            className="App-settingsButtonIcon"
+          />
         </button>
       </header>
 

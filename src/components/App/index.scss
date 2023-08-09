@@ -1,4 +1,5 @@
 @import '~/sass/common.scss';
+@import '~/sass/modules/Button.scss';
 
 /** @define App */
 
@@ -10,16 +11,34 @@
 
   &-levelselectButton,
   &-settingsButton {
+    @extend %Button;
+    @extend %Button--colored;
+
+    display: flex;
     position: absolute;
     top: 0;
     height: $App-header-height;
     width: $App-header-height;
+    border-width: $App-button-border-width;
+    border-top: 0;
+    justify-content: center;
+    align-items: center;
   }
 
   &-levelselectButton {
     @include z-index('appLevelselectButton');
 
     left: 0;
+    border-bottom-right-radius: $App-button-corner-radius;
+    border-left: 0;
+    padding: 0 $App-button-corner-padding $App-button-corner-padding 0;
+  }
+
+  &-levelselectButtonIcon,
+  &-settingsButtonIcon {
+    height: 70%;
+    width: 70%;
+    object-fit: contain;
   }
 
   &-homeButton {
@@ -36,6 +55,9 @@
     @include z-index('appSettingsButton');
 
     right: 0;
+    border-bottom-left-radius: $App-button-corner-radius;
+    border-right: 0;
+    padding: 0 0 $App-button-corner-padding $App-button-corner-padding;
   }
 
   &-home,

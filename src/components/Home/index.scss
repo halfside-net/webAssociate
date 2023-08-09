@@ -1,4 +1,5 @@
 @import '~/sass/common.scss';
+@import '~/sass/modules/Button.scss';
 
 /** @define Home */
 
@@ -22,14 +23,9 @@
   }
 
   &-button {
-    border-radius: $Home-button-border-radius;
-    border:
-      $Home-button-border-width
-      $Home-button-border-style
-      $Home-button-border-color;
-    background: $Home-button-background;
-    padding: $Home-button-padding;
-    text-align: center;
-    font-size: $Home-button-font-size;
+    @extend %Button;
+    @extend %Button--colored;
+    @extend %Button--shaped;
+    @extend %Button--size2;
   }
 }
