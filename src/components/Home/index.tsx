@@ -1,5 +1,5 @@
 import './index.scss';
-import logo from '~/assets/images/logo.png';
+import logo from '~/assets/images/icon_transparent.png';
 
 export default function Home(props: {
   onPlay?: () => void;

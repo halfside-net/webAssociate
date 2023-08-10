@@ -17,8 +17,8 @@
     display: flex;
     position: absolute;
     top: 0;
-    height: $App-header-height;
-    width: $App-header-height;
+    height: 0.75 * $App-header-height;
+    width: 0.75 * $App-header-height;
     border-width: $App-button-border-width;
     border-top: 0;
     justify-content: center;

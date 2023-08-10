@@ -1,7 +1,7 @@
 import { dangerouslySkipEscape } from 'vite-plugin-ssr/server'
 import favicon from '~/assets/images/favicon.png';
-import logo192 from '~/assets/images/logo192.png';
-import logo512 from '~/assets/images/logo512.png';
+import icon192 from '~/assets/images/icon192.png';
+import icon512 from '~/assets/images/icon512.png';
 
 export function render() {
   return dangerouslySkipEscape(JSON.stringify({
@@ -14,12 +14,12 @@ export function render() {
         type: 'image/png'
       },
       {
-        src: logo192,
+        src: icon192,
         type: 'image/png',
         sizes: '192x192'
       },
       {
-        src: logo512,
+        src: icon512,
         type: 'image/png',
         sizes: '512x512'
       }
@@ -27,6 +27,6 @@ export function render() {
     start_url: '.',
     display: 'standalone',
     theme_color: '#000',
-    background_color: '#fff'
+    background_color: '#5a90bb'
   }));
 }

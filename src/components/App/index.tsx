@@ -2,7 +2,7 @@ import './index.scss';
 import { useEffect, useRef, useState } from 'react';
 import { ReactComponent as CloseSVG } from '~/assets/images/close.svg';
 import { ReactComponent as LevelSelectSVG } from '~/assets/images/levelselect.svg';
-import logo from '~/assets/images/logo.png';
+import logo from '~/assets/images/icon_transparent.png';
 import { ReactComponent as PlaySVG } from '~/assets/images/play.svg';
 import { ReactComponent as SettingsSVG } from '~/assets/images/settings.svg';
 import Home from '~/components/Home';

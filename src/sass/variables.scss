@@ -21,7 +21,7 @@ $yellow: #ed8;
 
 $border-radius-default: 8px;
 $container-padding: 16px;
-$header-height: 48px;
+$header-height: 72px;
 $page-background: $teal;
 $word-background: $white;
 $word-background-bonus: $yellow;
@@ -122,7 +122,7 @@ $LevelSelect-card-spacing: $container-padding;
 $LevelSelect-padding-bottom: 1.5 * $container-padding;
 $LevelSelect-padding-left: $container-padding;
 $LevelSelect-padding-right: $container-padding;
-$LevelSelect-padding-top: $header-height + 1.5 * $container-padding;
+$LevelSelect-padding-top: $header-height + $container-padding;
 
 // Settings
 
