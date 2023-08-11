@@ -67,7 +67,7 @@ export default function App() {
 
   useEffect(() => {
     savedDataRef.current ??= loadSavedData();
-  });
+  }, []);
 
   return (
     <div
