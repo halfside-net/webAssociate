@@ -1,5 +1,6 @@
 import './index.scss';
 import { useState } from 'react';
+import logo from '~/assets/images/icon_transparent.png';
 import { LevelData, LevelMetaData, LevelSolutionData, LevelWordData, UnidentifiedLevelMetaData } from '~/components/Level/types';
 import LevelCard from '~/components/LevelCard';
 
@@ -17,6 +18,7 @@ const levelImportersById = Object.fromEntries(
 
 export default function LevelSelect(props: {
   levelData?: { [levelId: string]: LevelSolutionData };
+  onHomeButtonClick: () => void;
   onSelectLevel: (level: LevelData) => void;
 }) {
   const [loading, setLoading] = useState(false);
@@ -34,6 +36,17 @@ export default function LevelSelect(props: {
 
   return (
     <div className="LevelSelect">
+      <button
+        aria-label="Home"
+        className="LevelSelect-homeButton"
+        onClick={props.onHomeButtonClick}
+      >
+        <img
+          alt="webAssociate"
+          className="App-homeButtonIcon"
+          src={logo}
+        />
+      </button>
       <div className="LevelSelect-list">
         {levels.map(level => (
           <div

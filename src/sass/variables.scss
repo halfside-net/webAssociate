@@ -21,7 +21,7 @@ $yellow: #ed8;
 
 $border-radius-default: 8px;
 $container-padding: 16px;
-$header-height: 72px;
+$header-height: 54px;
 $page-background: $teal;
 $word-background: $white;
 $word-background-bonus: $yellow;
@@ -43,6 +43,8 @@ $word-outline-style-solved: solid;
 $word-outline-width: 1px;
 $word-outline-width-solved: 2px;
 
+$header-button-width: $header-height;
+
 // -------- Module Variables --------
 
 $Button-background: $word-background;
@@ -62,6 +64,7 @@ $Button-padding-top-bottom-base: 6px;
 $App-button-border-width: 4px;
 $App-button-corner-padding: 4px;
 $App-button-corner-radius: 70%;
+$App-button-width: $header-button-width;
 $App-font-family: $font-family-main;
 $App-header-height: $header-height;
 
@@ -79,9 +82,9 @@ $Association-background-unsolved:
 
 $Home-background: $page-background;
 $Home-logo-margin-bottom: 32px;
-$Home-padding-bottom: 64px;
+$Home-padding-bottom: 5vh;
 $Home-padding-side: 32px;
-$Home-padding-top: $header-height + 64px;
+$Home-padding-top: 5vh;
 
 // Level
 
@@ -119,6 +122,7 @@ $LevelCard-toggle-background-expanded:
 
 $LevelSelect-background: $page-background;
 $LevelSelect-card-spacing: $container-padding;
+$LevelSelect-home-button-height: $header-height;
 $LevelSelect-padding-bottom: 1.5 * $container-padding;
 $LevelSelect-padding-left: $container-padding;
 $LevelSelect-padding-right: $container-padding;
@@ -157,7 +161,8 @@ $Word-help-text-border: 1px solid $black;
 $Word-help-text-border-radius: 8px;
 $Word-help-text-color: $black;
 $Word-help-text-padding: 8px;
-$Word-help-text-margin: $container-padding;
+$Word-help-text-margin-left-right: $header-button-width + $container-padding;
+$Word-help-text-margin-top: $container-padding;
 $Word-help-text-width: 100%;
 $Word-line-height: 1;
 $Word-outline-color: $word-outline-color;

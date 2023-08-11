@@ -2,7 +2,6 @@ import './index.scss';
 import { useEffect, useRef, useState } from 'react';
 import { ReactComponent as CloseSVG } from '~/assets/images/close.svg';
 import { ReactComponent as LevelSelectSVG } from '~/assets/images/levelselect.svg';
-import logo from '~/assets/images/icon_transparent.png';
 import { ReactComponent as PlaySVG } from '~/assets/images/play.svg';
 import { ReactComponent as SettingsSVG } from '~/assets/images/settings.svg';
 import Home from '~/components/Home';
@@ -98,18 +97,6 @@ export default function App() {
           </button>
         }
         <button
-          aria-label="Home"
-          className="App-homeButton"
-          disabled={viewHome}
-          onClick={() => setViewHome(true)}
-        >
-          <img
-            alt="webAssociate"
-            className="App-homeButtonIcon"
-            src={logo}
-          />
-        </button>
-        <button
           aria-label={viewSettings ? 'Close settings' : 'Settings'}
           className="App-settingsButton"
           onClick={() => setViewSettings(!viewSettings)}
@@ -134,6 +121,7 @@ export default function App() {
       >
         <LevelSelect
           levelData={savedDataRef.current?.levels}
+          onHomeButtonClick={() => setViewHome(true)}
           onSelectLevel={level => {
             setLevel(level);
             setViewLevelselect(false);

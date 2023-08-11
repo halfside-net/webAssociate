@@ -114,12 +114,12 @@
     @include z-index('wordHelpText');
 
     position: fixed;
-    top: $header-height + $Word-help-text-margin;
+    top: $Word-help-text-margin-top;
     left: 50%;
     transform: translateX(-50%);
     border-radius: $Word-help-text-border-radius;
     width: $Word-help-text-width;
-    max-width: calc(100% - #{2 * $Word-help-text-margin});
+    max-width: calc(100% - #{2 * $Word-help-text-margin-left-right});
     border: $Word-help-text-border;
     background: $Word-help-text-background;
     padding: $Word-help-text-padding;
