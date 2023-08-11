@@ -48,23 +48,25 @@ export default function LevelCard(props: {
         className="LevelCard-toggleBtn"
         onClick={toggleDetails}
       />
-      <div className="LevelCard-info">
-        {props.size ? (
-          <div className="LevelCard-size">
-            Level Size: {
-              props.size < 900 ? 'Small'
-                : props.size < 1200 ? 'Medium'
-                  : props.size < 1500 ? 'Large'
-                    : 'Giant'
-            }
-          </div>
-        ) : ''}
-        {props.description ? (
-          <div className="LevelCard-description">
-            {props.description}
-          </div>
-        ) : ''}
-      </div>
+      {expanded && (
+        <div className="LevelCard-info">
+          {props.size ? (
+            <div className="LevelCard-size">
+              Level Size: {
+                props.size < 900 ? 'Small'
+                  : props.size < 1200 ? 'Medium'
+                    : props.size < 1500 ? 'Large'
+                      : 'Giant'
+              }
+            </div>
+          ) : ''}
+          {props.description ? (
+            <div className="LevelCard-description">
+              {props.description}
+            </div>
+          ) : ''}
+        </div>
+      )}
     </div>
   );
 }

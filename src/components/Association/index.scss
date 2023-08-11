@@ -9,11 +9,6 @@
   height: $Association-thickness;
   background: $Association-background-unsolved;
 
-  &--hidden
-  {
-    display: none;
-  }
-
   &--solved
   {
     background: $Association-background-solved;

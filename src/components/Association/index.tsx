@@ -8,17 +8,17 @@ export default function Association(props: {
   y1: number;
   y2: number;
 }) {
+  if (!(props.word1Solved || props.word2Solved)) {
+    return null;
+  }
+
   const x = props.x2 - props.x1;
   const y = props.y2 - props.y1;
 
   return (
     <div
       className={'Association'
-        + (
-          props.word1Solved != props.word2Solved ? ''
-            : props.word1Solved ? ' Association--solved'
-            : ' Association--hidden'
-          )
+        + (props.word1Solved && props.word2Solved ? ' Association--solved' : '')
       }
       style={{
         left: `${props.x1}px`,

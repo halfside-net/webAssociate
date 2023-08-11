@@ -100,11 +100,6 @@
     padding: $LevelCard-padding;
   }
 
-  &:not(.is-expanded) &-info
-  {
-    display: none;
-  }
-
   &-size {
     display: block;
   }

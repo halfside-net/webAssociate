@@ -3,10 +3,6 @@
 /** @define Word */
 
 .Word {
-  &.is-hidden {
-    display: none;
-  }
-
   &,
   &-label,
   &-placeholder,
@@ -129,10 +125,5 @@
     padding: $Word-help-text-padding;
     text-align: center;
     color: $Word-help-text-color;
-  }
-
-  &.is-focused &-helpTextIndicator,
-  &:not(.is-focused) &-helpText {
-    display: none;
   }
 }

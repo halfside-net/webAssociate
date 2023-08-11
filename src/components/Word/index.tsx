@@ -1,10 +1,10 @@
 import './index.scss';
 import { useRef, useState } from 'react';
-import { latinize } from '~/ts/helpers.ts';
+import { latinize } from '~/ts/helpers';
 
 export default function Word(props: {
   hasSolvedAssociation: boolean;
-  helpText?: string; 
+  helpText?: string;
   isBonus?: boolean;
   lettersSolved: number;
   onGuess: (guess: string) => void;
@@ -32,6 +32,10 @@ export default function Word(props: {
 
   const wordInputRef = useRef<HTMLInputElement>(null);
 
+  if (!(isSolved || props.hasSolvedAssociation)) {
+    return null;
+  }
+
   function handleBlur(e: React.FocusEvent<HTMLInputElement>) {
     props.onGuess(e.target.value);
     setFocused(false);
@@ -56,11 +60,7 @@ export default function Word(props: {
     <form
       className={'Word'
         + (props.isBonus ? ' Word--bonus' : '')
-        + (
-          isSolved ? ' is-solved'
-            : props.hasSolvedAssociation ? ''
-              : ' is-hidden'
-        )
+        + (isSolved ? ' is-solved' : '')
         + (focused ? ' is-focused' : '')
       }
       onSubmit={handleSubmit}
@@ -88,14 +88,14 @@ export default function Word(props: {
           value={value}
         />
 
-        {renderHelpText && (
+        {renderHelpText && !focused && (
           <div className="Word-helpTextIndicator">
             ?
           </div>
         )}
       </label>
 
-      {renderHelpText && (
+      {renderHelpText && focused && (
         <div className="Word-helpText">
           {props.helpText}
         </div>
