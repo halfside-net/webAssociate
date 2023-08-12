@@ -2,6 +2,7 @@ import { description, sitePath, themeColor, title, titleShort } from '../sitecon
 import favicon from '~/assets/images/favicon.png';
 import icon192 from '~/assets/images/icon192.png';
 import icon512 from '~/assets/images/icon512.png';
+import icon1024 from '~/assets/images/icon1024.png';
 
 export function render() {
   return JSON.stringify({
@@ -23,6 +24,11 @@ export function render() {
         src: icon512,
         type: 'image/png',
         sizes: '512x512'
+      },
+      {
+        src: icon1024,
+        type: 'image/png',
+        sizes: '1024x1024'
       }
     ],
     launch_handler: {
