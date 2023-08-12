@@ -1,36 +1,18 @@
 import { description, sitePath, themeColor, title, titleShort } from '../siteconfig.json';
-import favicon from '~/assets/images/favicon.png';
-import icon192 from '~/assets/images/icon192.png';
-import icon512 from '~/assets/images/icon512.png';
-import icon1024 from '~/assets/images/icon1024.png';
+import icons from '~/assets/images/icon.png?w=58;64;72;76;80;87;96;114;120;128;144;152;167;180;192;256;384;512;1024';
+
+const iconSizes = [58, 64, 72, 76, 80, 87, 96, 114, 120, 128, 144, 152, 167, 180, 192, 256, 384, 512, 1024];
 
 export function render() {
   return JSON.stringify({
     background_color: themeColor,
     description,
     display: 'standalone',
-    icons: [
-      {
-        src: favicon,
-        sizes: '64x64',
-        type: 'image/png'
-      },
-      {
-        src: icon192,
-        type: 'image/png',
-        sizes: '192x192'
-      },
-      {
-        src: icon512,
-        type: 'image/png',
-        sizes: '512x512'
-      },
-      {
-        src: icon1024,
-        type: 'image/png',
-        sizes: '1024x1024'
-      }
-    ],
+    icons: iconSizes.map((size, i) => ({
+      sizes: `${size}x${size}`,
+      src: icons[i],
+      type: 'image/png'
+    })),
     launch_handler: {
       client_mode: 'focus-existing'
     },

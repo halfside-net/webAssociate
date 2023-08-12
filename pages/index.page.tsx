@@ -1,7 +1,8 @@
 import '~/sass/index.scss';
 import { usePageContext } from '../renderer/usePageContext';
 import { description, siteDomain, sitePath, themeColor, title } from '../siteconfig.json';
-import favicon from '~/assets/images/favicon.png';
+import favicon from '~/assets/images/icon.png?w=64';
+import appleTouchIcon from '~/assets/images/icon.png?w=180';
 import App from '~/components/App';
 
 export function PageHead() {
@@ -22,7 +23,7 @@ export function PageHead() {
       <meta name="description" content={description} />
 
       <link rel="shortcut icon" href={favicon} />
-      <link rel="apple-touch-icon" href={favicon} />
+      <link rel="apple-touch-icon" href={appleTouchIcon} />
 
       <meta name="theme-color" content={themeColor} />
 

@@ -31,6 +31,7 @@
     "imagemin-svgo": "10.0.1",
     "imagemin-zopfli": "7.0.0",
     "sass": "1.64.1",
+    "vite-imagetools": "5.0.7",
     "vite-plugin-svgr": "3.2.0"
   },
   "engines": {
