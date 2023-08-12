@@ -6,11 +6,11 @@ import { ReactComponent as PlaySVG } from '~/assets/images/play.svg';
 import { ReactComponent as SettingsSVG } from '~/assets/images/settings.svg';
 import Home from '~/components/Home';
 import Level from '~/components/Level';
-import { LevelData, LevelSolutionData } from '~/components/Level/types';
+import type { LevelData, LevelSolutionData } from '~/components/Level/types';
 import LevelSelect from '~/components/LevelSelect';
 import Settings from '~/components/Settings';
 import { WindowResizeAdjuster } from '~/ts/WindowResizeAdjuster';
-import { SavedData } from './types';
+import type { SavedData } from './types';
 
 const appId = 'webassociate';
 const windowResizeAdjuster = new WindowResizeAdjuster();

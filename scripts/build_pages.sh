@@ -12,7 +12,7 @@ npm i
 npm run build
 
 # Fix webmanifest.json
-grep -v '<head></head>' "${OUTPUT_PATH}webmanifest.json.html" > "${OUTPUT_PATH}webmanifest.json"
+echo -n "$(grep -v '<head></head>' "${OUTPUT_PATH}webmanifest.json.html" | head -n 1)" > "${OUTPUT_PATH}webmanifest.json"
 
 # Remove unwanted files
 rm "${OUTPUT_PATH}manifest.json" \

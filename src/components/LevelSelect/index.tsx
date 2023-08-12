@@ -1,7 +1,7 @@
 import './index.scss';
 import { useState } from 'react';
 import logo from '~/assets/images/icon_transparent.png';
-import { LevelData, LevelMetaData, LevelSolutionData, LevelWordData, UnidentifiedLevelMetaData } from '~/components/Level/types';
+import type { LevelData, LevelMetaData, LevelSolutionData, LevelWordData, UnidentifiedLevelMetaData } from '~/components/Level/types';
 import LevelCard from '~/components/LevelCard';
 
 function levelIdFromFilepath(filepath: string) {

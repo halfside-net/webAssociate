@@ -1,10 +1,10 @@
 import './index.scss';
 import { useEffect, useState } from 'react';
 import Association from '~/components/Association';
-import { WordData } from '~/components/Word/types';
+import type { WordData } from '~/components/Word/types';
 import Word from '~/components/Word';
 import { normalizeText } from '~/ts/helpers';
-import { LevelData, LevelSolutionData } from './types';
+import type { LevelData, LevelSolutionData } from './types';
 
 function getCorrectSubstring(wordData: WordData, guess: string) {
   const normalizedGuess = normalizeText(guess);

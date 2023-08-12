@@ -1,6 +1,6 @@
 import './index.scss';
 import { useState } from 'react';
-import { LevelSolutionData } from '~/components/Level/types';
+import type { LevelSolutionData } from '~/components/Level/types';
 
 export default function LevelCard(props: {
   description?: string;
