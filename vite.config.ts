@@ -11,6 +11,8 @@ import imageminMozjpeg from 'imagemin-mozjpeg';
 import imageminSvgo from 'imagemin-svgo';
 import imageminZopfli from 'imagemin-zopfli';
 
+import { sitePath } from './siteconfig.json';
+
 const srcDir = 'src';
 const outDir = 'dist';
 
@@ -20,16 +22,16 @@ const svgoConfig = {
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/webassociate/',
+  base: sitePath,
   build: {
     outDir
   },
   plugins: [
     react(),
-    ssr({ 
+    ssr({
       prerender: {
         noExtraDir: true
-      } 
+      }
     }),
     svgr({
       svgrOptions: {
@@ -59,7 +61,7 @@ export default defineConfig({
       }
     })
   ],
-  publicDir: 'src/static',
+  publicDir: path.join(srcDir, 'static'),
   resolve: {
     alias: {
       '~': path.resolve(srcDir)

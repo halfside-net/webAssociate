@@ -1,11 +1,13 @@
+import { description, sitePath, themeColor, title, titleShort } from '../siteconfig.json';
 import favicon from '~/assets/images/favicon.png';
 import icon192 from '~/assets/images/icon192.png';
 import icon512 from '~/assets/images/icon512.png';
 
 export function render() {
   return JSON.stringify({
-    short_name: 'React App',
-    name: 'Create React App Sample',
+    background_color: themeColor,
+    description,
+    display: 'standalone',
     icons: [
       {
         src: favicon,
@@ -23,9 +25,13 @@ export function render() {
         sizes: '512x512'
       }
     ],
-    start_url: '.',
-    display: 'standalone',
-    theme_color: '#000',
-    background_color: '#5a90bb'
+    launch_handler: {
+      client_mode: 'focus-existing'
+    },
+    name: title,
+    scope: sitePath,
+    short_name: titleShort,
+    start_url: sitePath,
+    theme_color: themeColor,
   });
 }

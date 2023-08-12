@@ -1,12 +1,11 @@
 import '~/sass/index.scss';
 import { usePageContext } from '../renderer/usePageContext';
+import { description, siteDomain, sitePath, themeColor, title } from '../siteconfig.json';
 import favicon from '~/assets/images/favicon.png';
 import App from '~/components/App';
 
 export function PageHead() {
-  const description = 'Solve a web of word associations in this re-creation of a classic puzzle game!';
-  const title = 'webAssociate';
-  const urlBase = 'https://www.halfside.net/webassociate';
+  const urlBase = `https://${siteDomain}${sitePath}`;
 
   const { urlPathname } = usePageContext();
 
@@ -25,9 +24,9 @@ export function PageHead() {
       <link rel="shortcut icon" href={favicon} />
       <link rel="apple-touch-icon" href={favicon} />
 
-      <meta name="theme-color" content="#fff" />
+      <meta name="theme-color" content={themeColor} />
 
-      <link rel="manifest" href={urlBase + '/webmanifest.json'} />
+      <link rel="manifest" href={urlBase + 'webmanifest.json'} />
 
       <link rel="canonical" href={url} />
 
