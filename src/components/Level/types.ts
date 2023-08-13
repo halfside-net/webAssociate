@@ -1,4 +1,4 @@
-import { WordData } from "~/components/Word/types";
+import type { WordData } from '~/components/Word/types';
 
 export interface LevelData extends LevelMetaData {
     words: LevelWordData;

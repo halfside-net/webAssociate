@@ -23,6 +23,7 @@ $border-radius-default: 8px;
 $container-padding: 16px;
 $header-height: 54px;
 $page-background: $teal;
+$page-font-color: $white;
 $word-background: $white;
 $word-background-bonus: $yellow;
 $word-background-solved: $red;
@@ -130,10 +131,13 @@ $LevelSelect-padding-top: $header-height + $container-padding;
 
 // Settings
 
-$Settings-background: $page-background;
-$Settings-padding-bottom: 1.5 * $container-padding;
-$Settings-padding-side: $container-padding;
-$Settings-padding-top: 1.5 * $container-padding;
+$SettingsPage-background: $page-background;
+$SettingsPage-padding-bottom: 1.5 * $container-padding;
+$SettingsPage-padding-side: $container-padding;
+$SettingsPage-padding-top: 1.5 * $container-padding;
+$SettingsPage-title-color: $page-font-color;
+$SettingsPage-title-font-size: 64px;
+$SettingsPage-title-margin: $container-padding;
 
 // Word
 

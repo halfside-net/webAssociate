@@ -8,7 +8,8 @@ import Home from '~/components/Home';
 import Level from '~/components/Level';
 import type { LevelData, LevelSolutionData } from '~/components/Level/types';
 import LevelSelect from '~/components/LevelSelect';
-import Settings from '~/components/Settings';
+import SettingsPage from '~/components/SettingsPage';
+import { Settings } from '~/components/SettingsPage/types';
 import { WindowResizeAdjuster } from '~/ts/WindowResizeAdjuster';
 import type { SavedData } from './types';
 
@@ -25,6 +26,7 @@ function loadSavedData(): SavedData {
 
 export default function App() {
   const [level, setLevel] = useState<LevelData>();
+  const [settings, setSettings] = useState<Settings>({});
   const [viewHome, setViewHome] = useState(true);
   const [viewLevelselect, setViewLevelselect] = useState(true);
   const [viewSettings, setViewSettings] = useState(false);
@@ -60,6 +62,13 @@ export default function App() {
   function saveLevel(levelId: string, data: LevelSolutionData) {
     if (savedDataRef.current) {
       savedDataRef.current.levels[levelId] = data;
+      save();
+    }
+  }
+
+  function saveSettings(newSettings: Settings) {
+    if (savedDataRef.current) {
+      savedDataRef.current.settings = newSettings;
       save();
     }
   }
@@ -131,12 +140,13 @@ export default function App() {
       <div
         className="App-settings"
       >
-        <Settings />
+        <SettingsPage />
       </div>
       <div
         className="App-level"
       >
         <Level
+          disableHelpText={settings.disableHelpText}
           key={level?.id || ''}
           level={level}
           onSave={data => level && saveLevel(level.id, data)}

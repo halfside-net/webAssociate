@@ -6,11 +6,9 @@ import appleTouchIcon from '~/assets/images/icon.png?w=180';
 import App from '~/components/App';
 
 export function PageHead() {
-  const urlBase = `https://${siteDomain}${sitePath}`;
-
   const { urlPathname } = usePageContext();
 
-  const url = urlBase + urlPathname;
+  const url = `https://${siteDomain}${sitePath}${urlPathname}`;
 
   return (
     <head>
@@ -27,7 +25,7 @@ export function PageHead() {
 
       <meta name="theme-color" content={themeColor} />
 
-      <link rel="manifest" href={urlBase + 'webmanifest.json'} />
+      <link rel="manifest" href={sitePath + 'webmanifest.json'} />
 
       <link rel="canonical" href={url} />
 

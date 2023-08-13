@@ -29,6 +29,7 @@ function getCorrectSubstring(wordData: WordData, guess: string) {
 }
 
 export default function Level(props: {
+  disableHelpText?: boolean;
   level?: LevelData;
   onSave: (savedData: LevelSolutionData) => void;
   savedData?: LevelSolutionData;
@@ -108,7 +109,7 @@ export default function Level(props: {
         {wordEntries.map(([wordId, wordData]) => (
           <Word
             hasSolvedAssociation={(wordData.associations ?? []).some(otherWordId => wordIsSolved(otherWordId))}
-            helpText={wordData.helpText}
+            helpText={props.disableHelpText ? undefined : wordData.helpText}
             isBonus={wordData.isBonus}
             key={wordId}
             lettersSolved={levelState[wordId].length}
