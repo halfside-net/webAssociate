@@ -3,6 +3,7 @@ import { useState } from 'react';
 import logo from '~/assets/images/icon_transparent.png';
 import type { LevelData, LevelMetaData, LevelSolutionData, LevelWordData, UnidentifiedLevelMetaData } from '~/components/Level/types';
 import LevelCard from '~/components/LevelCard';
+import { levelIsSolved } from '~/components/LevelCard/helpers';
 
 function levelIdFromFilepath(filepath: string) {
   return filepath.split('/').at(-2) ?? '';
@@ -17,6 +18,7 @@ const levelImportersById = Object.fromEntries(
 );
 
 export default function LevelSelect(props: {
+  hideCompletedLevels?: boolean;
   levelData?: { [levelId: string]: LevelSolutionData };
   onHomeButtonClick: () => void;
   onSelectLevel: (level: LevelData) => void;
@@ -48,20 +50,23 @@ export default function LevelSelect(props: {
         />
       </button>
       <div className="LevelSelect-list">
-        {levels.map(level => (
-          <div
-            className="LevelSelect-card"
-            key={level.id}
-          >
-            <LevelCard
-              description={level.description}
-              name={level.name}
-              onSelect={() => selectLevel(level)}
-              size={level.size}
-              solutionData={props.levelData?.[level.id]}
-            />
-          </div>
-        ))}
+        {levels
+          .filter(level => !props.hideCompletedLevels || !levelIsSolved(level.size, props.levelData?.[level.id]))
+          .map(level => (
+            <div
+              className="LevelSelect-card"
+              key={level.id}
+            >
+              <LevelCard
+                description={level.description}
+                name={level.name}
+                onSelect={() => selectLevel(level)}
+                size={level.size}
+                solutionData={props.levelData?.[level.id]}
+              />
+            </div>
+          ))
+        }
       </div>
     </div>
   );

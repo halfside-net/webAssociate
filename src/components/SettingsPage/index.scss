@@ -13,9 +13,56 @@
   flex-direction: column;
   align-items: center;
 
-  &-title {
-    margin-bottom: $SettingsPage-title-margin;
-    font-size: $SettingsPage-title-font-size;
-    color: $SettingsPage-title-color;
+  &-form {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    justify-content: center;
+    gap: $SettingsPage-setting-margin;;
+  }
+
+  &-setting {
+    display: flex;
+    border-radius: $SettingsPage-setting-border-radius;
+    background: $SettingsPage-setting-background;
+    padding: $SettingsPage-setting-padding;
+    align-items: center;
+    color: $SettingsPage-setting-color;
+    font-size: $SettingsPage-setting-font-size;
+    font-weight: $SettingsPage-setting-font-weight;
+
+    &--checkbox {
+      cursor: pointer;
+    }
+  }
+
+  &-checkbox {
+    position: relative;
+    margin-right: $SettingsPage-checkbox-margin;
+    appearance: none;
+    height: $SettingsPage-checkbox-size;
+    width: $SettingsPage-checkbox-size;
+    border-radius: $SettingsPage-checkbox-border-radius;
+    border: $SettingsPage-checkbox-border-width solid $SettingsPage-checkbox-color;
+    flex-shrink: 0;
+    cursor: pointer;
+
+    &:checked {
+      border-color: transparent;
+      background: $SettingsPage-checkbox-color;
+
+      &::after {
+        position: absolute;
+        bottom: 14%;
+        left: -3%;
+        transform: rotate(45deg);
+        transform-origin: bottom right;
+        height: 80%;
+        width: 40%;
+        border-right: (0.1 * $SettingsPage-checkbox-size) solid $SettingsPage-setting-background;
+        border-bottom: (0.1 * $SettingsPage-checkbox-size) solid $SettingsPage-setting-background;
+        content: '';
+      }
+    }
   }
 }

@@ -1,6 +1,7 @@
 import './index.scss';
 import { useState } from 'react';
 import type { LevelSolutionData } from '~/components/Level/types';
+import { getLevelProgress } from './helpers';
 
 export default function LevelCard(props: {
   description?: string;
@@ -11,10 +12,7 @@ export default function LevelCard(props: {
 }) {
   const [expanded, setExpanded] = useState(false);
 
-  const lettersSolved = Object.values(props.solutionData ?? {})
-    .reduce((total, solution) => total + solution.length, 0);
-
-  const progress = props.size ? Math.min(lettersSolved / props.size, 1) : 0;
+  const progress = getLevelProgress(props.size, props.solutionData);
 
   function toggleDetails() {
     setExpanded(!expanded);

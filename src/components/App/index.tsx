@@ -66,9 +66,13 @@ export default function App() {
     }
   }
 
-  function saveSettings(newSettings: Settings) {
+  function saveSettings(changedSettings: Settings) {
     if (savedDataRef.current) {
-      savedDataRef.current.settings = newSettings;
+      savedDataRef.current.settings = {
+        ...savedDataRef.current.settings,
+        ...changedSettings
+      };
+      setSettings(savedDataRef.current.settings);
       save();
     }
   }
@@ -129,6 +133,7 @@ export default function App() {
         className="App-levelselect"
       >
         <LevelSelect
+          hideCompletedLevels={settings.hideCompletedLevels}
           levelData={savedDataRef.current?.levels}
           onHomeButtonClick={() => setViewHome(true)}
           onSelectLevel={level => {
@@ -140,7 +145,10 @@ export default function App() {
       <div
         className="App-settings"
       >
-        <SettingsPage />
+        <SettingsPage
+          onChange={saveSettings}
+          settings={settings}
+        />
       </div>
       <div
         className="App-level"
