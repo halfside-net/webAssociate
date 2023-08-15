@@ -8,7 +8,7 @@ import App from '~/components/App';
 export function PageHead() {
   const { urlPathname } = usePageContext();
 
-  const url = `https://${siteDomain}${sitePath}${urlPathname}`;
+  const url = `https://${siteDomain}${sitePath}${urlPathname.replace(/^\//, '')}`;
 
   return (
     <head>

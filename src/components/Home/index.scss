@@ -17,8 +17,7 @@
 
   &-logo {
     margin-bottom: $Home-logo-margin-bottom;
-    height: 0;
-    flex-grow: 1;
+    width: 100%;
     object-fit: contain;
   }
 
@@ -27,5 +26,7 @@
     @extend %Button--colored;
     @extend %Button--shaped;
     @extend %Button--size2;
+
+    flex-shrink: 0;
   }
 }
