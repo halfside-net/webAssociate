@@ -6,7 +6,9 @@ import LevelCard from '~/components/LevelCard';
 import { levelIsSolved } from '~/components/LevelCard/helpers';
 
 function levelIdFromFilepath(filepath: string) {
-  return filepath.split('/').at(-2) ?? '';
+  const parts = filepath.split('/');
+
+  return parts[parts.length - 2] ?? '';
 }
 
 const levels = Object.entries(import.meta.glob<UnidentifiedLevelMetaData>('~/data/levels/*/meta.json', { eager: true }))
