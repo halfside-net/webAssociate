@@ -66,12 +66,13 @@
     top: 0;
     left: 0;
     outline-offset: -$Word-border-width;
+    height: 100%;
+    width: 100%;
+    appearance: none;
     border:
       $Word-border-width
       $Word-border-style
       $Word-border-color;
-    height: 100%;
-    width: 100%;
     background: inherit;
     padding:
       $Word-padding-top-bottom

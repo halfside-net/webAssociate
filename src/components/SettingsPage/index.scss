@@ -18,7 +18,6 @@
     flex-grow: 1;
     flex-direction: column;
     justify-content: center;
-    gap: $SettingsPage-setting-margin;;
   }
 
   &-setting {
@@ -33,6 +32,10 @@
 
     &--checkbox {
       cursor: pointer;
+    }
+
+    &:not(:first-child) {
+      margin-top: $SettingsPage-setting-margin;
     }
   }
 
