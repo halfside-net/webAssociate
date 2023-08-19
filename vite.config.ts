@@ -2,6 +2,7 @@ import path from 'path';
 import { defineConfig } from 'vite';
 import viteImagemin from '@vheemstra/vite-plugin-imagemin';
 import react from '@vitejs/plugin-react';
+import autoprefixer from 'autoprefixer'
 import { imagetools } from 'vite-imagetools'
 import { ssr } from 'vite-plugin-ssr/plugin';
 import svgr from "vite-plugin-svgr";
@@ -26,6 +27,13 @@ export default defineConfig({
   base: sitePath,
   build: {
     outDir
+  },
+  css: {
+    postcss: {
+      plugins: [
+        autoprefixer()
+      ]
+    }
   },
   plugins: [
     imagetools(),
