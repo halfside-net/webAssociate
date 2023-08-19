@@ -24,7 +24,11 @@
     "vite-plugin-ssr": "0.4.133"
   },
   "devDependencies": {
+    "@babel/cli": "7.22.10",
+    "@babel/core": "7.22.10",
+    "@babel/preset-env": "7.22.10",
     "@vheemstra/vite-plugin-imagemin": "1.0.11",
+    "babel-preset-minify": "0.5.2",
     "imagemin-gifsicle": "7.0.0",
     "imagemin-jpeg-exif-rotate": "0.0.1",
     "imagemin-mozjpeg": "10.0.0",
@@ -38,7 +42,7 @@
     "node": ">=16.14.2"
   },
   "scripts": {
-    "build": "vite build",
+    "build": "vite build && npx babel ./dist/client --out-dir ./dist/client",
     "dev": "npm run server",
     "lint": "eslint . --max-warnings 0",
     "prod": "npm run lint && npm run build && npm run server:prod",

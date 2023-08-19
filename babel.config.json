@@ -1,0 +1,14 @@
+{
+  "presets": [
+    ["@babel/preset-env", {
+      "corejs": 3,
+      "targets": {
+        "esmodules": true
+      },
+      "useBuiltIns": "usage"
+    }],
+    ["minify", {
+      "builtIns": false
+    }]
+  ]
+}
