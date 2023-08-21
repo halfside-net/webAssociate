@@ -1,12 +1,12 @@
 import './index.scss';
 import { useEffect, useState } from 'react';
 import Association from '~/components/Association';
-import type { WordData } from '~/components/Word/types';
-import Word from '~/components/Word';
+import type { Word } from '~/components/WordView/types';
+import WordView from '~/components/WordView';
 import { normalizeText } from '~/ts/helpers';
-import type { LevelData, LevelSolutionData } from './types';
+import type { Level, LevelData } from './types';
 
-function getCorrectSubstring(wordData: WordData, guess: string) {
+function getCorrectSubstring(wordData: Word, guess: string) {
   const normalizedGuess = normalizeText(guess);
   let lettersSolved = 0;
 
@@ -28,11 +28,11 @@ function getCorrectSubstring(wordData: WordData, guess: string) {
   return wordData.word.substring(0, lettersSolved);
 }
 
-export default function Level(props: {
+export default function LevelView(props: {
   disableHelpText?: boolean;
-  level?: LevelData;
-  onSave: (savedData: LevelSolutionData) => void;
-  savedData?: LevelSolutionData;
+  level?: Level;
+  onSave: (savedData: LevelData) => void;
+  savedData?: LevelData;
 }) {
   const words = props.level?.words ?? {};
 
@@ -83,9 +83,9 @@ export default function Level(props: {
   useEffect(save, [props.level?.id, ...levelStateValues]);
 
   return (
-    <div className="Level">
+    <div className="LevelView">
       <div
-        className="Level-container"
+        className="LevelView-container"
         style={{
           height: `${props.level?.height ?? 0}px`,
           width: `${props.level?.width ?? 0}px`
@@ -107,7 +107,7 @@ export default function Level(props: {
             ))
         )}
         {wordEntries.map(([wordId, wordData]) => (
-          <Word
+          <WordView
             hasSolvedAssociation={(wordData.associations ?? []).some(otherWordId => wordIsSolved(otherWordId))}
             helpText={props.disableHelpText ? undefined : wordData.helpText}
             isBonus={wordData.isBonus}

@@ -5,8 +5,8 @@ import { ReactComponent as LevelSelectSVG } from '~/assets/images/levelselect.sv
 import { ReactComponent as PlaySVG } from '~/assets/images/play.svg';
 import { ReactComponent as SettingsSVG } from '~/assets/images/settings.svg';
 import Home from '~/components/Home';
-import Level from '~/components/Level';
-import type { LevelData, LevelSolutionData } from '~/components/Level/types';
+import LevelView from '~/components/LevelView';
+import type { Level, LevelData } from '~/components/LevelView/types';
 import LevelSelect from '~/components/LevelSelect';
 import SettingsPage from '~/components/SettingsPage';
 import { Settings } from '~/components/SettingsPage/types';
@@ -14,18 +14,19 @@ import { WindowResizeAdjuster } from '~/ts/WindowResizeAdjuster';
 import type { SavedData } from './types';
 
 const appId = 'webassociate';
+const savedDataVersion = 1;
 const windowResizeAdjuster = new WindowResizeAdjuster();
 
-function loadSavedData(): SavedData {
-  return {
-    levels: {},
-    settings: {},
-    ...JSON.parse(window.localStorage.getItem(appId) || '{}')
-  };
+async function loadSavedData(): Promise<SavedData> {
+  // TODO: Validate saved data
+  return JSON.parse(window.localStorage.getItem(appId) || '{}');
 }
 
 export default function App() {
-  const [level, setLevel] = useState<LevelData>();
+  const [activeLevelId, setActiveLevelId] = useState<string>();
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [level, setLevel] = useState<Level>();
+  const [levelData, setLevelData] = useState<{ [levelId: string]: LevelData }>({});
   const [settings, setSettings] = useState<Settings>({});
   const [viewHome, setViewHome] = useState(true);
   const [viewLevelselect, setViewLevelselect] = useState(true);
@@ -37,7 +38,6 @@ export default function App() {
     }
   });
   const hasFocusRef = useRef(false);
-  const savedDataRef = useRef<SavedData>();
 
   function handleBlur() {
     hasFocusRef.current = false;
@@ -56,34 +56,35 @@ export default function App() {
   }
 
   function save() {
-    window.localStorage.setItem(appId, JSON.stringify(savedDataRef.current));
-  }
+    const data: SavedData = {
+      activeLevelId,
+      levelData,
+      settings,
+      version: savedDataVersion
+    };
 
-  function saveLevel(levelId: string, data: LevelSolutionData) {
-    if (savedDataRef.current) {
-      savedDataRef.current.levels[levelId] = data;
-      save();
-    }
-  }
-
-  function saveSettings(changedSettings: Settings) {
-    if (savedDataRef.current) {
-      savedDataRef.current.settings = {
-        ...savedDataRef.current.settings,
-        ...changedSettings
-      };
-      setSettings(savedDataRef.current.settings);
-      save();
-    }
+    window.localStorage.setItem(appId, JSON.stringify(data));
   }
 
   useEffect(() => {
-    savedDataRef.current ??= loadSavedData();
+    loadSavedData()
+      .then(loadedData => {
+        setLevelData(loadedData.levelData || levelData);
+        setSettings(loadedData.settings || settings);
+      })
+      .finally(() => setIsLoaded(true));
   }, []);
+
+  useEffect(() => {
+    if (isLoaded) {
+      save();
+    }
+  }, [levelData, settings]);
 
   return (
     <div
       className={'App'
+        + (isLoaded ? ' is-loaded' : '')
         + (viewHome ? ' is-showing-home' : '')
         + (viewLevelselect ? ' is-showing-levelselect' : '')
         + (viewSettings ? ' is-showing-settings' : '')
@@ -92,7 +93,7 @@ export default function App() {
       onFocus={handleFocus}
     >
       <header className="App-header">
-        {(level || !viewLevelselect) &&
+        {isLoaded && (level || !viewLevelselect) &&
           <button
             aria-label={viewLevelselect ? 'Resume level' : 'Select level'}
             className="App-levelselectButton"
@@ -109,34 +110,39 @@ export default function App() {
             }
           </button>
         }
-        <button
-          aria-label={viewSettings ? 'Close settings' : 'Settings'}
-          className="App-settingsButton"
-          onClick={() => setViewSettings(!viewSettings)}
-        >
-          {viewSettings ?
-            <CloseSVG
-              className="App-settingsButtonIcon"
-            />
-          :
-            <SettingsSVG
-              className="App-settingsButtonIcon"
-            />
-          }
-        </button>
+        {isLoaded &&
+          <button
+            aria-label={viewSettings ? 'Close settings' : 'Settings'}
+            className="App-settingsButton"
+            onClick={() => setViewSettings(!viewSettings)}
+          >
+            {viewSettings ?
+              <CloseSVG
+                className="App-settingsButtonIcon"
+              />
+            :
+              <SettingsSVG
+                className="App-settingsButtonIcon"
+              />
+            }
+          </button>
+        }
       </header>
 
       <div className="App-home">
-        <Home onPlay={() => setViewHome(false)} />
+        <Home
+          onPlay={isLoaded ? () => setViewHome(false) : undefined}
+        />
       </div>
       <div
         className="App-levelselect"
       >
         <LevelSelect
           hideCompletedLevels={settings.hideCompletedLevels}
-          levelData={savedDataRef.current?.levels}
+          levelData={levelData}
           onHomeButtonClick={() => setViewHome(true)}
           onSelectLevel={level => {
+            setActiveLevelId(level?.id);
             setLevel(level);
             setViewLevelselect(false);
           }}
@@ -146,19 +152,19 @@ export default function App() {
         className="App-settings"
       >
         <SettingsPage
-          onChange={saveSettings}
+          onChange={changedSettings => setSettings({ ...settings, ...changedSettings })}
           settings={settings}
         />
       </div>
       <div
         className="App-level"
       >
-        <Level
+        <LevelView
           disableHelpText={settings.disableHelpText}
           key={level?.id || ''}
           level={level}
-          onSave={data => level && saveLevel(level.id, data)}
-          savedData={level && savedDataRef.current?.levels[level.id]}
+          onSave={data => level && setLevelData({ ...levelData, [level.id]: data })}
+          savedData={level && levelData[level.id]}
         />
       </div>
     </div>

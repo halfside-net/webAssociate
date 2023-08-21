@@ -2,7 +2,7 @@ import './index.scss';
 import { useRef, useState } from 'react';
 import { latinize } from '~/ts/helpers';
 
-export default function Word(props: {
+export default function WordView(props: {
   hasSolvedAssociation: boolean;
   helpText?: string;
   isBonus?: boolean;
@@ -58,28 +58,28 @@ export default function Word(props: {
 
   return (
     <form
-      className={'Word'
-        + (props.isBonus ? ' Word--bonus' : '')
+      className={'WordView'
+        + (props.isBonus ? ' WordView--bonus' : '')
         + (isSolved ? ' is-solved' : '')
         + (focused ? ' is-focused' : '')
       }
       onSubmit={handleSubmit}
     >
       <label
-        className="Word-label"
+        className="WordView-label"
         style={{
           left: `${props.x}px`,
           top: `${props.y}px`
         }}
       >
-        <div className="Word-placeholder">
+        <div className="WordView-placeholder">
           {placeholder}
         </div>
 
         <input
           autoComplete="off"
           autoCorrect="off"
-          className="Word-input"
+          className="WordView-input"
           name="word"
           onBlur={handleBlur}
           onChange={handleChange}
@@ -89,14 +89,14 @@ export default function Word(props: {
         />
 
         {renderHelpText && !focused && (
-          <div className="Word-helpTextIndicator">
+          <div className="WordView-helpTextIndicator">
             ?
           </div>
         )}
       </label>
 
       {renderHelpText && focused && (
-        <div className="Word-helpText">
+        <div className="WordView-helpText">
           {props.helpText}
         </div>
       )}

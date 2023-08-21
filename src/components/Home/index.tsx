@@ -12,7 +12,9 @@ export default function Home(props: {
         src={logo}
       />
       <button
-        className="Home-button Home-button--play"
+        className={'Home-button Home-button--play'
+          + (props.onPlay ? '' : ' Home-button--hidden')
+        }
         onClick={props.onPlay}
       >
         Play

@@ -1,33 +1,20 @@
 import './index.scss';
 import { useState } from 'react';
 import logo from '~/assets/images/icon_transparent.png';
-import type { LevelData, LevelMetaData, LevelSolutionData, LevelWordData, UnidentifiedLevelMetaData } from '~/components/Level/types';
+import type { Level, LevelMetadata, LevelData } from '~/components/LevelView/types';
 import LevelCard from '~/components/LevelCard';
 import { levelIsSolved } from '~/components/LevelCard/helpers';
-
-function levelIdFromFilepath(filepath: string) {
-  const parts = filepath.split('/');
-
-  return parts[parts.length - 2] ?? '';
-}
-
-const levels = Object.entries(import.meta.glob<UnidentifiedLevelMetaData>('~/data/levels/*/meta.json', { eager: true }))
-  .map(([filepath, data]): LevelMetaData => ({ ...data, id: levelIdFromFilepath(filepath) }))
-  .sort((a, b) => a.id < b.id ? -1 : 1);
-const levelImportersById = Object.fromEntries(
-  Object.entries(import.meta.glob<{ default: LevelWordData }>('~/data/levels/*/level.json'))
-    .map(([filepath, importer]) => [levelIdFromFilepath(filepath), importer])
-);
+import { levelImportersById, levels } from './helpers';
 
 export default function LevelSelect(props: {
   hideCompletedLevels?: boolean;
-  levelData?: { [levelId: string]: LevelSolutionData };
+  levelData?: { [levelId: string]: LevelData };
   onHomeButtonClick: () => void;
-  onSelectLevel: (level: LevelData) => void;
+  onSelectLevel: (level: Level) => void;
 }) {
   const [loading, setLoading] = useState(false);
 
-  function selectLevel(level: LevelMetaData) {
+  function selectLevel(level: LevelMetadata) {
     if (!loading) {
       setLoading(true);
       levelImportersById[level.id]()

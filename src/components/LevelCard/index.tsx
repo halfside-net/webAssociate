@@ -1,6 +1,6 @@
 import './index.scss';
 import { useState } from 'react';
-import type { LevelSolutionData } from '~/components/Level/types';
+import type { LevelData } from '~/components/LevelView/types';
 import { getLevelProgress } from './helpers';
 
 export default function LevelCard(props: {
@@ -8,7 +8,7 @@ export default function LevelCard(props: {
   name: string;
   onSelect?: () => void;
   size: number;
-  solutionData?: LevelSolutionData;
+  solutionData?: LevelData;
 }) {
   const [expanded, setExpanded] = useState(false);
 

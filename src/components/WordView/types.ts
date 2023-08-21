@@ -1,4 +1,4 @@
-export interface WordData {
+export interface Word {
     alternativeWords?: string[];
     associations?: string[];
     helpText?: string;

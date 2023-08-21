@@ -28,5 +28,9 @@
     @extend %Button--size2;
 
     flex-shrink: 0;
+
+    &--hidden {
+      visibility: hidden;
+    }
   }
 }
