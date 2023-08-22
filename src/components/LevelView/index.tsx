@@ -1,10 +1,26 @@
 import './index.scss';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Association from '~/components/Association';
 import type { Word } from '~/components/WordView/types';
 import WordView from '~/components/WordView';
 import { normalizeText } from '~/ts/helpers';
-import type { Level, LevelData } from './types';
+import { levelImportersById, levelMetadataById } from './helpers';
+import type { Level, LevelData, LevelWords } from './types';
+
+function generateLevelState(wordEntries: [string, Word][], savedData?: LevelData): LevelData {
+  return Object.fromEntries(
+    wordEntries.map(([wordId, wordData]) => [
+      wordId,
+      wordData.isStartup ? wordData.word
+        : getCorrectSubstring(wordData, savedData?.[wordId] ?? '')
+    ])
+  );
+}
+
+function generateWordEntries(words: LevelWords): [string, Word][] {
+  return Object.entries(words)
+    .sort(([, dataA], [, dataB]) => dataA.y - dataB.y || dataA.x - dataB.x);
+}
 
 function getCorrectSubstring(wordData: Word, guess: string) {
   const normalizedGuess = normalizeText(guess);
@@ -30,22 +46,18 @@ function getCorrectSubstring(wordData: Word, guess: string) {
 
 export default function LevelView(props: {
   disableHelpText?: boolean;
-  level?: Level;
+  levelId?: string;
   onSave: (savedData: LevelData) => void;
   savedData?: LevelData;
 }) {
-  const words = props.level?.words ?? {};
+  const [level, setLevel] = useState<Level>();
 
-  const wordEntries = Object.entries(words)
-    .sort(([, dataA], [, dataB]) => dataA.y - dataB.y || dataA.x - dataB.x);
+  const loadingLevelIdRef = useRef('');
 
-  const [levelState, setLevelState] = useState(Object.fromEntries(
-    wordEntries.map(([wordId, wordData]) => [
-      wordId,
-      wordData.isStartup ? wordData.word
-        : getCorrectSubstring(wordData, props.savedData?.[wordId] ?? '')
-    ])
-  ));
+  const words = level?.words ?? {};
+  const wordEntries = generateWordEntries(words);
+
+  const [levelState, setLevelState] = useState(generateLevelState(wordEntries, props.savedData));
 
   const levelStateValues = Object.entries(levelState)
     .sort(([idA], [idB]) => idA < idB ? -1 : 1)
@@ -68,6 +80,27 @@ export default function LevelView(props: {
     }
   }
 
+  function load() {
+    if (props.levelId && levelImportersById[props.levelId]) {
+      loadingLevelIdRef.current = props.levelId;
+      levelImportersById[props.levelId]()
+        .then(module => module.default)
+        .catch((): LevelWords => ({}))
+        .then((words) => {
+          // Only set the level if the level ID hasn't changed since the import started
+          if (props.levelId == loadingLevelIdRef.current) {
+            setLevel({
+              ...(levelMetadataById[props.levelId] ?? {}),
+              words
+            });
+            setLevelState(generateLevelState(generateWordEntries(words), props.savedData));
+          }
+        });
+    } else {
+      setLevel(undefined);
+    }
+  }
+
   function save() {
     props.onSave(Object.fromEntries(
       Object.entries(levelState)
@@ -79,16 +112,19 @@ export default function LevelView(props: {
     return levelState[wordId].length >= words[wordId].word.length;
   }
 
+  // Load new level if levelId changed
+  useEffect(load, [props.levelId]);
+
   // Save if the level or any of the word states changed
-  useEffect(save, [props.level?.id, ...levelStateValues]);
+  useEffect(save, [props.levelId, JSON.stringify(levelStateValues)]);
 
   return (
     <div className="LevelView">
       <div
         className="LevelView-container"
         style={{
-          height: `${props.level?.height ?? 0}px`,
-          width: `${props.level?.width ?? 0}px`
+          height: `${level?.height ?? 0}px`,
+          width: `${level?.width ?? 0}px`
         }}
       >
         {wordEntries.map(([wordId, wordData]) =>

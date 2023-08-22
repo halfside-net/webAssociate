@@ -1,30 +1,16 @@
 import './index.scss';
-import { useState } from 'react';
 import logo from '~/assets/images/icon_transparent.png';
-import type { Level, LevelMetadata, LevelData } from '~/components/LevelView/types';
+import type { LevelData } from '~/components/LevelView/types';
 import LevelCard from '~/components/LevelCard';
 import { levelIsSolved } from '~/components/LevelCard/helpers';
-import { levelImportersById, levels } from './helpers';
+import { allLevelMetadata } from '~/components/LevelView/helpers';
 
 export default function LevelSelect(props: {
   hideCompletedLevels?: boolean;
   levelData?: { [levelId: string]: LevelData };
   onHomeButtonClick: () => void;
-  onSelectLevel: (level: Level) => void;
+  onSelectLevel: (levelId: string) => void;
 }) {
-  const [loading, setLoading] = useState(false);
-
-  function selectLevel(level: LevelMetadata) {
-    if (!loading) {
-      setLoading(true);
-      levelImportersById[level.id]()
-        .then(({ default: words }) => {
-          setLoading(false);
-          props.onSelectLevel({ ...level, words });
-        });
-    }
-  }
-
   return (
     <div className="LevelSelect">
       <button
@@ -39,19 +25,19 @@ export default function LevelSelect(props: {
         />
       </button>
       <div className="LevelSelect-list">
-        {levels
-          .filter(level => !props.hideCompletedLevels || !levelIsSolved(level.size, props.levelData?.[level.id]))
-          .map(level => (
+        {allLevelMetadata
+          .filter(levelMetadata => !props.hideCompletedLevels || !levelIsSolved(levelMetadata.size, props.levelData?.[levelMetadata.id]))
+          .map(levelMetadata => (
             <div
               className="LevelSelect-card"
-              key={level.id}
+              key={levelMetadata.id}
             >
               <LevelCard
-                description={level.description}
-                name={level.name}
-                onSelect={() => selectLevel(level)}
-                size={level.size}
-                solutionData={props.levelData?.[level.id]}
+                description={levelMetadata.description}
+                name={levelMetadata.name}
+                onSelect={() => props.onSelectLevel(levelMetadata.id)}
+                size={levelMetadata.size}
+                solutionData={props.levelData?.[levelMetadata.id]}
               />
             </div>
           ))

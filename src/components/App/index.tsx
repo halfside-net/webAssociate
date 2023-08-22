@@ -6,7 +6,7 @@ import { ReactComponent as PlaySVG } from '~/assets/images/play.svg';
 import { ReactComponent as SettingsSVG } from '~/assets/images/settings.svg';
 import Home from '~/components/Home';
 import LevelView from '~/components/LevelView';
-import type { Level, LevelData } from '~/components/LevelView/types';
+import type { LevelData } from '~/components/LevelView/types';
 import LevelSelect from '~/components/LevelSelect';
 import SettingsPage from '~/components/SettingsPage';
 import { Settings } from '~/components/SettingsPage/types';
@@ -23,9 +23,8 @@ async function loadSavedData(): Promise<SavedData> {
 }
 
 export default function App() {
-  const [activeLevelId, setActiveLevelId] = useState<string>();
+  const [activeLevelId, setActiveLevelId] = useState('');
   const [isLoaded, setIsLoaded] = useState(false);
-  const [level, setLevel] = useState<Level>();
   const [levelData, setLevelData] = useState<{ [levelId: string]: LevelData }>({});
   const [settings, setSettings] = useState<Settings>({});
   const [viewHome, setViewHome] = useState(true);
@@ -69,8 +68,10 @@ export default function App() {
   useEffect(() => {
     loadSavedData()
       .then(loadedData => {
+        setActiveLevelId(activeLevelId || loadedData.activeLevelId || '');
         setLevelData(loadedData.levelData || levelData);
         setSettings(loadedData.settings || settings);
+        setViewLevelselect(!(viewHome && loadedData.activeLevelId));
       })
       .finally(() => setIsLoaded(true));
   }, []);
@@ -93,7 +94,7 @@ export default function App() {
       onFocus={handleFocus}
     >
       <header className="App-header">
-        {isLoaded && (level || !viewLevelselect) &&
+        {isLoaded && (activeLevelId || !viewLevelselect) &&
           <button
             aria-label={viewLevelselect ? 'Resume level' : 'Select level'}
             className="App-levelselectButton"
@@ -141,9 +142,8 @@ export default function App() {
           hideCompletedLevels={settings.hideCompletedLevels}
           levelData={levelData}
           onHomeButtonClick={() => setViewHome(true)}
-          onSelectLevel={level => {
-            setActiveLevelId(level?.id);
-            setLevel(level);
+          onSelectLevel={levelId => {
+            setActiveLevelId(levelId);
             setViewLevelselect(false);
           }}
         />
@@ -161,10 +161,10 @@ export default function App() {
       >
         <LevelView
           disableHelpText={settings.disableHelpText}
-          key={level?.id || ''}
-          level={level}
-          onSave={data => level && setLevelData({ ...levelData, [level.id]: data })}
-          savedData={level && levelData[level.id]}
+          key={activeLevelId}
+          levelId={activeLevelId}
+          onSave={data => activeLevelId && setLevelData({ ...levelData, [activeLevelId]: data })}
+          savedData={activeLevelId ? levelData[activeLevelId] : undefined}
         />
       </div>
     </div>
