@@ -1,7 +1,7 @@
 import { description, sitePath, themeColor, title, titleShort } from '../siteconfig.json';
-import icons from '~/assets/images/icon.png?w=58;64;72;76;80;87;96;114;120;128;144;152;167;180;192;256;384;512;1024';
+import icons from '~/assets/images/icon.png?w=72;96;120;128;144;152;180;192;384;512';
 
-const iconSizes = [58, 64, 72, 76, 80, 87, 96, 114, 120, 128, 144, 152, 167, 180, 192, 256, 384, 512, 1024];
+const iconSizes = [72, 96, 120, 128, 144, 152, 180, 192, 384, 512];
 
 export function render() {
   return JSON.stringify({
