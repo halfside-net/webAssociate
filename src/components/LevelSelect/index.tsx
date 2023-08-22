@@ -20,7 +20,7 @@ export default function LevelSelect(props: {
       >
         <img
           alt="webAssociate"
-          className="App-homeButtonIcon"
+          className="LevelSelect-homeButtonIcon"
           src={logo}
         />
       </button>

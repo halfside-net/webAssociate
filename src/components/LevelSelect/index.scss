@@ -17,8 +17,10 @@
   &-homeButton {
     display: block;
     margin: 0 auto ($LevelSelect-padding-top - $LevelSelect-home-button-height);
+  }
+
+  &-homeButtonIcon {
     height: $LevelSelect-home-button-height;
-    width: $LevelSelect-home-button-height;
   }
 
   &-card {
