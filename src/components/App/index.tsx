@@ -11,15 +11,28 @@ import LevelSelect from '~/components/LevelSelect';
 import SettingsPage from '~/components/SettingsPage';
 import { Settings } from '~/components/SettingsPage/types';
 import { WindowResizeAdjuster } from '~/ts/WindowResizeAdjuster';
-import type { SavedData } from './types';
+import { isAppDataV1 } from './helpers';
+import type { AppDataV1 } from './types';
 
 const appId = 'webassociate';
-const savedDataVersion = 1;
 const windowResizeAdjuster = new WindowResizeAdjuster();
 
-async function loadSavedData(): Promise<SavedData> {
-  // TODO: Validate saved data
-  return JSON.parse(window.localStorage.getItem(appId) || '{}');
+async function loadData(): Promise<AppDataV1> {
+  const jsonData = window.localStorage.getItem(appId);
+
+  if (jsonData) {
+    const savedData = JSON.parse(jsonData);
+
+    if (isAppDataV1(savedData)) {
+      return savedData;
+    }
+
+    console.warn('The saved data was in an unknown format. Starting with new data instead.');
+  }
+
+  return {
+    version: 1
+  };
 }
 
 export default function App() {
@@ -55,22 +68,22 @@ export default function App() {
   }
 
   function save() {
-    const data: SavedData = {
+    const data: AppDataV1 = {
       activeLevelId,
       levelData,
       settings,
-      version: savedDataVersion
+      version: 1
     };
 
     window.localStorage.setItem(appId, JSON.stringify(data));
   }
 
   useEffect(() => {
-    loadSavedData()
+    loadData()
       .then(loadedData => {
         setActiveLevelId(activeLevelId || loadedData.activeLevelId || '');
-        setLevelData(loadedData.levelData || levelData);
-        setSettings(loadedData.settings || settings);
+        setLevelData(loadedData.levelData ?? levelData);
+        setSettings(loadedData.settings ?? settings);
         setViewLevelselect(!(viewHome && loadedData.activeLevelId));
       })
       .finally(() => setIsLoaded(true));

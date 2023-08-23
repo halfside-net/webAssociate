@@ -1,12 +1,12 @@
 import type { LevelData } from '~/components/LevelView/types';
 import type { Settings } from '~/components/SettingsPage/types';
 
-export interface SavedData {
+export interface AppDataV1 {
     activeLevelId?: string,
-    levelData: {
+    levelData?: {
         [levelId: string]: LevelData
     },
-    settings: Settings,
-    /** The version of the saved data format */
-    version: number
+    settings?: Settings,
+    /** The version of the app data format */
+    version: 1
 }
