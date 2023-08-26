@@ -38,6 +38,11 @@ export default function SettingsPage(props: {
           label="Hide Completed Levels"
           onChange={checked => props.onChange({ hideCompletedLevels: checked })}
         />
+        <SettingsCheckbox
+          checked={!props.settings.dontResumeLevelOnLoad}
+          label="Resume Last Level on Load"
+          onChange={checked => props.onChange({ dontResumeLevelOnLoad: !checked })}
+        />
       </form>
     </div>
   );

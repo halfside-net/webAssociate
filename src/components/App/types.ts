@@ -3,7 +3,7 @@ import type { Settings } from '~/components/SettingsPage/types';
 
 export interface AppDataV1 {
     activeLevelId?: string,
-    levelData?: {
+    levelsData?: {
         [levelId: string]: LevelData
     },
     settings?: Settings,

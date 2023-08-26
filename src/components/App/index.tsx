@@ -38,7 +38,7 @@ async function loadData(): Promise<AppDataV1> {
 export default function App() {
   const [activeLevelId, setActiveLevelId] = useState('');
   const [isLoaded, setIsLoaded] = useState(false);
-  const [levelData, setLevelData] = useState<{ [levelId: string]: LevelData }>({});
+  const [levelsData, setLevelsData] = useState<{ [levelId: string]: LevelData }>({});
   const [settings, setSettings] = useState<Settings>({});
   const [viewHome, setViewHome] = useState(true);
   const [viewLevelselect, setViewLevelselect] = useState(true);
@@ -70,7 +70,7 @@ export default function App() {
   function save() {
     const data: AppDataV1 = {
       activeLevelId,
-      levelData,
+      levelsData: levelsData,
       settings,
       version: 1
     };
@@ -82,9 +82,13 @@ export default function App() {
     loadData()
       .then(loadedData => {
         setActiveLevelId(activeLevelId || loadedData.activeLevelId || '');
-        setLevelData(loadedData.levelData ?? levelData);
+        setLevelsData(loadedData.levelsData ?? levelsData);
         setSettings(loadedData.settings ?? settings);
-        setViewLevelselect(!(viewHome && loadedData.activeLevelId));
+
+        if (!isLoaded && loadedData.activeLevelId && !loadedData.settings?.dontResumeLevelOnLoad) {
+          setViewHome(false);
+          setViewLevelselect(false);
+        }
       })
       .finally(() => setIsLoaded(true));
   }, []);
@@ -93,7 +97,7 @@ export default function App() {
     if (isLoaded) {
       save();
     }
-  }, [levelData, settings]);
+  }, [levelsData, settings]);
 
   return (
     <div
@@ -153,7 +157,7 @@ export default function App() {
       >
         <LevelSelect
           hideCompletedLevels={settings.hideCompletedLevels}
-          levelData={levelData}
+          levelData={levelsData}
           onHomeButtonClick={() => setViewHome(true)}
           onSelectLevel={levelId => {
             setActiveLevelId(levelId);
@@ -176,8 +180,8 @@ export default function App() {
           disableHelpText={settings.disableHelpText}
           key={activeLevelId}
           levelId={activeLevelId}
-          onSave={data => activeLevelId && setLevelData({ ...levelData, [activeLevelId]: data })}
-          savedData={activeLevelId ? levelData[activeLevelId] : undefined}
+          onSave={data => activeLevelId && setLevelsData({ ...levelsData, [activeLevelId]: data })}
+          savedData={activeLevelId ? levelsData[activeLevelId] : undefined}
         />
       </div>
     </div>

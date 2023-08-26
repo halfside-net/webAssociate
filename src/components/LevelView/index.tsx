@@ -47,6 +47,7 @@ function getCorrectSubstring(wordData: Word, guess: string) {
 export default function LevelView(props: {
   disableHelpText?: boolean;
   levelId?: string;
+  onLoad?: (success: boolean) => void;
   onSave: (savedData: LevelData) => void;
   savedData?: LevelData;
 }) {
@@ -82,10 +83,16 @@ export default function LevelView(props: {
 
   function load() {
     if (props.levelId && levelImportersById[props.levelId]) {
+      let success = true;
+
       loadingLevelIdRef.current = props.levelId;
       levelImportersById[props.levelId]()
         .then(module => module.default)
-        .catch((): LevelWords => ({}))
+        .catch((): LevelWords => {
+          success = false;
+
+          return {};
+        })
         .then((words) => {
           // Only set the level if the level ID hasn't changed since the import started
           if (props.levelId == loadingLevelIdRef.current) {
@@ -94,10 +101,12 @@ export default function LevelView(props: {
               words
             });
             setLevelState(generateLevelState(generateWordEntries(words), props.savedData));
+            props.onLoad?.(success);
           }
         });
     } else {
       setLevel(undefined);
+      props.onLoad?.(false);
     }
   }
 

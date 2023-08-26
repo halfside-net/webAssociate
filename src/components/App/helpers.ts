@@ -4,10 +4,10 @@ export function isAppDataV1(obj: any): obj is AppDataV1 {
   return obj && typeof obj == 'object'
     && 'version' in obj
     && Object.entries(obj).every(([key, value]) => {
-      switch (key) {
+      switch (key as keyof AppDataV1) {
         case 'activeLevelId':
           return typeof value === 'string';
-        case 'levelData':
+        case 'levelsData':
           return value
             && typeof value === 'object'
             && Object.values(value).every(levelData =>
