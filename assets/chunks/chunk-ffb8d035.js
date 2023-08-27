@@ -1,0 +1,1 @@
+var s="Solve a web of word associations in this re-creation of a classic puzzle game!",t="www.halfside.net",a="/webassociate/",e="#5a90bb",o="webAssociate",i="webAssociate";export{a,e as b,i as c,s as d,t as s,o as t};
