@@ -1,31 +1,35 @@
 import type { Word } from '~/components/WordView/types';
 
+export interface GameData {
+  [levelId: string]: LevelData
+}
+
 /**
- * The base game data for a Level
+ * The base data for a Level
  */
 export interface Level extends LevelMetadata {
-    words: LevelWords;
+  words: LevelWords;
 }
 
 /**
  * The user's data for a Level
  */
 export interface LevelData {
-    [word: string]: string;
+  [word: string]: string;
 }
 
 export interface LevelMetadata extends UnidentifiedLevelMetadata {
-    id: string;
+  id: string;
 }
 
 export interface LevelWords {
-    [wordId: string]: Word;
+  [wordId: string]: Word;
 }
 
 export interface UnidentifiedLevelMetadata {
-    description?: string;
-    height: number;
-    name: string;
-    size: number;
-    width: number;
+  description?: string;
+  height: number;
+  name: string;
+  size: number;
+  width: number;
 }

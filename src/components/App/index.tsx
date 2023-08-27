@@ -6,7 +6,7 @@ import { ReactComponent as PlaySVG } from '~/assets/images/play.svg';
 import { ReactComponent as SettingsSVG } from '~/assets/images/settings.svg';
 import Home from '~/components/Home';
 import LevelView from '~/components/LevelView';
-import type { LevelData } from '~/components/LevelView/types';
+import type { GameData } from '~/components/LevelView/types';
 import LevelSelect from '~/components/LevelSelect';
 import SettingsPage from '~/components/SettingsPage';
 import { Settings } from '~/components/SettingsPage/types';
@@ -38,7 +38,7 @@ async function loadData(): Promise<AppDataV1> {
 export default function App() {
   const [activeLevelId, setActiveLevelId] = useState('');
   const [isLoaded, setIsLoaded] = useState(false);
-  const [levelsData, setLevelsData] = useState<{ [levelId: string]: LevelData }>({});
+  const [gameData, setGameData] = useState<GameData>({});
   const [settings, setSettings] = useState<Settings>({});
   const [viewHome, setViewHome] = useState(true);
   const [viewLevelselect, setViewLevelselect] = useState(true);
@@ -70,7 +70,7 @@ export default function App() {
   function save() {
     const data: AppDataV1 = {
       activeLevelId,
-      levelsData: levelsData,
+      levelsData: gameData,
       settings,
       version: 1
     };
@@ -82,7 +82,7 @@ export default function App() {
     loadData()
       .then(loadedData => {
         setActiveLevelId(activeLevelId || loadedData.activeLevelId || '');
-        setLevelsData(loadedData.levelsData ?? levelsData);
+        setGameData(loadedData.levelsData ?? gameData);
         setSettings(loadedData.settings ?? settings);
 
         if (!isLoaded && loadedData.activeLevelId && !loadedData.settings?.dontResumeLevelOnLoad) {
@@ -97,7 +97,7 @@ export default function App() {
     if (isLoaded) {
       save();
     }
-  }, [levelsData, settings]);
+  }, [activeLevelId, gameData, settings]);
 
   return (
     <div
@@ -157,7 +157,7 @@ export default function App() {
       >
         <LevelSelect
           hideCompletedLevels={settings.hideCompletedLevels}
-          levelData={levelsData}
+          levelData={gameData}
           onHomeButtonClick={() => setViewHome(true)}
           onSelectLevel={levelId => {
             setActiveLevelId(levelId);
@@ -180,8 +180,8 @@ export default function App() {
           disableHelpText={settings.disableHelpText}
           key={activeLevelId}
           levelId={activeLevelId}
-          onSave={data => activeLevelId && setLevelsData({ ...levelsData, [activeLevelId]: data })}
-          savedData={activeLevelId ? levelsData[activeLevelId] : undefined}
+          onSave={setGameData}
+          gameData={gameData}
         />
       </div>
     </div>

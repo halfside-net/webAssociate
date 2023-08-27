@@ -5,9 +5,9 @@ import type { Word } from '~/components/WordView/types';
 import WordView from '~/components/WordView';
 import { normalizeText } from '~/ts/helpers';
 import { levelImportersById, levelMetadataById } from './helpers';
-import type { Level, LevelData, LevelWords } from './types';
+import type { GameData, Level, LevelData, LevelWords } from './types';
 
-function generateLevelState(wordEntries: [string, Word][], savedData?: LevelData): LevelData {
+function generateLevelData(wordEntries: [string, Word][], savedData?: LevelData): LevelData {
   return Object.fromEntries(
     wordEntries.map(([wordId, wordData]) => [
       wordId,
@@ -46,10 +46,9 @@ function getCorrectSubstring(wordData: Word, guess: string) {
 
 export default function LevelView(props: {
   disableHelpText?: boolean;
+  gameData?: GameData;
   levelId?: string;
-  onLoad?: (success: boolean) => void;
-  onSave: (savedData: LevelData) => void;
-  savedData?: LevelData;
+  onSave: (gameData: GameData) => void;
 }) {
   const [level, setLevel] = useState<Level>();
 
@@ -57,12 +56,7 @@ export default function LevelView(props: {
 
   const words = level?.words ?? {};
   const wordEntries = generateWordEntries(words);
-
-  const [levelState, setLevelState] = useState(generateLevelState(wordEntries, props.savedData));
-
-  const levelStateValues = Object.entries(levelState)
-    .sort(([idA], [idB]) => idA < idB ? -1 : 1)
-    .map(([, wordState]) => wordState);
+  const levelData = generateLevelData(wordEntries, props.levelId ? props.gameData?.[props.levelId] : undefined);
 
   function guessWord(wordId: string, guess: string) {
     const wordData = words[wordId];
@@ -74,10 +68,15 @@ export default function LevelView(props: {
     } else {
       const correctSubstring = getCorrectSubstring(wordData, guess);
 
-      setLevelState(state => correctSubstring > (state[wordId] ?? '') ? {
-        ...state,
-        [wordId]: correctSubstring
-      } : state);
+      if (props.levelId && correctSubstring.length > (levelData[wordId] ?? '').length) {
+        props.onSave({
+          ...props.gameData,
+          [props.levelId]: {
+            ...props.gameData?.[props.levelId],
+            [wordId]: correctSubstring
+          }
+        });
+      }
     }
   }
 
@@ -100,32 +99,19 @@ export default function LevelView(props: {
               ...(levelMetadataById[props.levelId] ?? {}),
               words
             });
-            setLevelState(generateLevelState(generateWordEntries(words), props.savedData));
-            props.onLoad?.(success);
           }
         });
     } else {
       setLevel(undefined);
-      props.onLoad?.(false);
     }
   }
 
-  function save() {
-    props.onSave(Object.fromEntries(
-      Object.entries(levelState)
-        .filter(([id, solution]) => solution && !words[id].isStartup)
-    ));
-  }
-
   function wordIsSolved(wordId: string) {
-    return levelState[wordId].length >= words[wordId].word.length;
+    return levelData[wordId].length >= words[wordId].word.length;
   }
 
   // Load new level if levelId changed
   useEffect(load, [props.levelId]);
-
-  // Save if the level or any of the word states changed
-  useEffect(save, [props.levelId, JSON.stringify(levelStateValues)]);
 
   return (
     <div className="LevelView">
@@ -157,7 +143,7 @@ export default function LevelView(props: {
             helpText={props.disableHelpText ? undefined : wordData.helpText}
             isBonus={wordData.isBonus}
             key={wordId}
-            lettersSolved={levelState[wordId].length}
+            lettersSolved={levelData[wordId].length}
             onGuess={guess => guessWord(wordId, guess)}
             word={wordData.word}
             x={wordData.x}
