@@ -79,6 +79,11 @@ $Association-background-unsolved:
   (calc(50% + #{$Association-thickness * 1.5}) 0) / ($Association-thickness * 6 100%)
   linear-gradient(90deg, $Association-color 50%, transparent 50%);
 
+// Game
+
+$Game-font-family: $font-family-main;
+$Game-padding-top: $header-height;
+
 // Home
 
 $Home-background: $page-background;
@@ -86,11 +91,6 @@ $Home-logo-margin-bottom: 32px;
 $Home-padding-bottom: 5vh;
 $Home-padding-side: 32px;
 $Home-padding-top: 5vh;
-
-// Level
-
-$Level-font-family: $font-family-main;
-$Level-padding-top: $header-height;
 
 // LevelCard
 
