@@ -1,4 +1,4 @@
-import type { LevelData } from '~/components/LevelView/types';
+import type { LevelData } from '~/components/Game/types';
 import type { Settings } from '~/components/SettingsPage/types';
 
 export interface AppDataV1 {

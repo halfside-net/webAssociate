@@ -1,9 +1,9 @@
 import './index.scss';
 import logo from '~/assets/images/icon_transparent.png';
-import type { LevelData } from '~/components/LevelView/types';
+import type { LevelData } from '~/components/Game/types';
 import LevelCard from '~/components/LevelCard';
 import { levelIsSolved } from '~/components/LevelCard/helpers';
-import { allLevelMetadata } from '~/components/LevelView/helpers';
+import { allLevelMetadata } from '~/components/Game/helpers';
 
 export default function LevelSelect(props: {
   hideCompletedLevels?: boolean;

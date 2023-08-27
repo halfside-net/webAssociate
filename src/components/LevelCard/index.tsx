@@ -1,6 +1,6 @@
 import './index.scss';
 import { useState } from 'react';
-import type { LevelData } from '~/components/LevelView/types';
+import type { LevelData } from '~/components/Game/types';
 import { getLevelProgress } from './helpers';
 
 export default function LevelCard(props: {

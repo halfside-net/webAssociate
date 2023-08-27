@@ -1,4 +1,4 @@
-import type { LevelData } from '~/components/LevelView/types';
+import type { LevelData } from '~/components/Game/types';
 
 export function getLevelProgress(levelSize: number, solutionData?: LevelData) {
   const lettersSolved = Object.values(solutionData ?? {})

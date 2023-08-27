@@ -44,7 +44,7 @@ function getCorrectSubstring(wordData: Word, guess: string) {
   return wordData.word.substring(0, lettersSolved);
 }
 
-export default function LevelView(props: {
+export default function Game(props: {
   disableHelpText?: boolean;
   gameData?: GameData;
   levelId?: string;
@@ -114,9 +114,9 @@ export default function LevelView(props: {
   useEffect(load, [props.levelId]);
 
   return (
-    <div className="LevelView">
+    <div className="Game">
       <div
-        className="LevelView-container"
+        className="Game-container"
         style={{
           height: `${level?.height ?? 0}px`,
           width: `${level?.width ?? 0}px`

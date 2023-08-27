@@ -4,9 +4,9 @@ import { ReactComponent as CloseSVG } from '~/assets/images/close.svg';
 import { ReactComponent as LevelSelectSVG } from '~/assets/images/menu_list.svg';
 import { ReactComponent as PlaySVG } from '~/assets/images/play.svg';
 import { ReactComponent as SettingsSVG } from '~/assets/images/settings.svg';
+import Game from '~/components/Game';
+import type { GameData } from '~/components/Game/types';
 import Home from '~/components/Home';
-import LevelView from '~/components/LevelView';
-import type { GameData } from '~/components/LevelView/types';
 import LevelSelect from '~/components/LevelSelect';
 import SettingsPage from '~/components/SettingsPage';
 import { Settings } from '~/components/SettingsPage/types';
@@ -176,7 +176,7 @@ export default function App() {
       <div
         className="App-level"
       >
-        <LevelView
+        <Game
           disableHelpText={settings.disableHelpText}
           key={activeLevelId}
           levelId={activeLevelId}
